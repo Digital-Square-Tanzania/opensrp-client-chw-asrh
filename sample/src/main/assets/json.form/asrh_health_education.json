@@ -89,7 +89,7 @@
         "openmrs_entity_id": "provided_health_education",
         "type": "check_box",
         "combine_checkbox_option_values": "true",
-        "hint": "Select health education and counseling provided",
+        "label": "Select health education and counseling provided",
         "options": [
           {
             "key": "sexual_reproductive_health_education",
@@ -161,6 +161,35 @@
         "v_required": {
           "value": "true",
           "err": "Required"
+        },
+        "relevance": {
+          "step1:health_education_provided": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
+        }
+      },
+      {
+        "key": "other_provided_health_education",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_provided_health_education",
+        "type": "edit_text",
+        "hint": "Other Health Education Provided",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
+        "relevance": {
+          "step1:provided_health_education": {
+            "ex-checkbox": [
+              {
+                "or": [
+                  "other"
+                ]
+              }
+            ]
+          }
         }
       },
       {
@@ -194,6 +223,12 @@
         "v_required": {
           "value": "true",
           "err": "Required"
+        },
+        "relevance": {
+          "step1:health_education_provided": {
+            "type": "string",
+            "ex": "equalTo(., \"yes\")"
+          }
         }
       }
     ]

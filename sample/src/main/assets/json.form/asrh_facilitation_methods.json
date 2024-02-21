@@ -105,6 +105,24 @@
           "value": "true",
           "err": "Required"
         }
+      },
+      {
+        "key": "other_facilitation_methods",
+        "openmrs_entity_parent": "",
+        "openmrs_entity": "concept",
+        "openmrs_entity_id": "other_facilitation_methods",
+        "type": "edit_text",
+        "hint": "Other Facilitation Methods Used",
+        "v_required": {
+          "value": true,
+          "err": "Required"
+        },
+        "relevance": {
+          "step1:facilitation_methods": {
+            "type": "string",
+            "ex": "equalTo(., \"other\")"
+          }
+        }
       }
     ]
   }
