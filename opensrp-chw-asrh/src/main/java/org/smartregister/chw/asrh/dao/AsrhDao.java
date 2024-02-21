@@ -16,7 +16,7 @@ import timber.log.Timber;
 
 public class AsrhDao extends AbstractDao {
     public static void closeAsrhMemberFromRegister(String baseEntityID) {
-        String sql = "update ec_asrh_register set is_closed = 1 where base_entity_id = '" + baseEntityID + "'";
+        String sql = "update " + Constants.TABLES.ARSH_REGISTER + " set is_closed = 1 where base_entity_id = '" + baseEntityID + "'";
         updateDB(sql);
     }
 
