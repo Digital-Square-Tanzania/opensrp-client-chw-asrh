@@ -4,9 +4,9 @@ import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
-import org.smartregister.chw.asrh.util.JsonFormUtils;
 import org.smartregister.chw.asrh.domain.MemberObject;
 import org.smartregister.chw.asrh.model.BaseAsrhVisitAction;
+import org.smartregister.chw.asrh.util.JsonFormUtils;
 
 import timber.log.Timber;
 
@@ -16,7 +16,7 @@ import timber.log.Timber;
 public class HealthEducationActionHelper extends AsrhVisitActionHelper {
     protected Context context;
     protected MemberObject memberObject;
-    protected String sbcHealthEducation;
+    protected String healthEducation;
 
     public HealthEducationActionHelper(Context context, MemberObject memberObject) {
         this.context = context;
@@ -37,7 +37,7 @@ public class HealthEducationActionHelper extends AsrhVisitActionHelper {
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            sbcHealthEducation = JsonFormUtils.getValue(jsonObject, "health_education_received");
+            healthEducation = JsonFormUtils.getValue(jsonObject, "health_education_provided");
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -50,7 +50,7 @@ public class HealthEducationActionHelper extends AsrhVisitActionHelper {
 
     @Override
     public BaseAsrhVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(sbcHealthEducation)) {
+        if (StringUtils.isNotBlank(healthEducation)) {
             return BaseAsrhVisitAction.Status.COMPLETED;
         } else {
             return BaseAsrhVisitAction.Status.PENDING;

@@ -13,12 +13,12 @@ import timber.log.Timber;
 /**
  * ASRH Activity Action Helper
  */
-public class HealthEducationOnHivInterventionsActionHelper extends AsrhVisitActionHelper {
+public class SexualReproductiveHealthEducationActionHelper extends AsrhVisitActionHelper {
     protected Context context;
     protected MemberObject memberObject;
-    protected String sbcHealthEducationOnHivIntervention;
+    protected String providedSexualReproductiveHealthEducation;
 
-    public HealthEducationOnHivInterventionsActionHelper(Context context, MemberObject memberObject) {
+    public SexualReproductiveHealthEducationActionHelper(Context context, MemberObject memberObject) {
         this.context = context;
         this.memberObject = memberObject;
     }
@@ -37,7 +37,7 @@ public class HealthEducationOnHivInterventionsActionHelper extends AsrhVisitActi
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            sbcHealthEducationOnHivIntervention = JsonFormUtils.getValue(jsonObject, "health_education_hiv_intervention");
+            providedSexualReproductiveHealthEducation = JsonFormUtils.getValue(jsonObject, "provided_sexual_reproductive_health_health_education");
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -50,7 +50,7 @@ public class HealthEducationOnHivInterventionsActionHelper extends AsrhVisitActi
 
     @Override
     public BaseAsrhVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(sbcHealthEducationOnHivIntervention)) {
+        if (StringUtils.isNotBlank(providedSexualReproductiveHealthEducation)) {
             return BaseAsrhVisitAction.Status.COMPLETED;
         } else {
             return BaseAsrhVisitAction.Status.PENDING;

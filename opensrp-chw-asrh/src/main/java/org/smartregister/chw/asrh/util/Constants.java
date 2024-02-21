@@ -28,25 +28,16 @@ public interface Constants {
     interface FORMS {
         String ASRH_ENROLLMENT = "asrh_enrollment";
 
-        String SBC_HIV_STATUS = "sbc_hiv_status";
+        String ASRH_CLIENT_STATUS = "asrh_client_status";
 
-        String SBC_ACTIVITY = "sbc_activity";
+        String ASRH_HEALTH_EDUCATION = "asrh_health_education";
 
-        String SBC_HEALTH_EDUCATION = "sbc_health_education";
+        String ASRH_SEXUAL_REPRODUCTIVE_HEALTH_EDUCATION = "asrh_sexual_reproductive_health_education";
 
-        String SBC_HEALTH_EDUCATION_ON_HIV = "sbc_health_education_hiv_intervention";
+        String ASRH_MENTAL_HEALTH_AND_SUBSTANCE_ABUSE = "asrh_mental_health_and_substance_abuse";
 
-        String HEALTH_EDUCATION_SBC_MATERIALS = "sbc_health_education_hiv_materials";
+        String ASRH_FACILITATION_METHOD = "asrh_facilitation_methods";
 
-        String SBC_SERVICE_SURVEY = "sbc_service_survey";
-
-        String SBC_ART_CONDOM_EDUCATION = "sbc_art_condom_education";
-
-        String SBC_COMMENTS = "sbc_comments";
-
-        String SBC_MOBILIZATION_SESSION= "sbc_health_education_mobilization";
-
-        String SBC_MONTHLY_SOCIAL_MEDIA_REPORT= "sbc_monthly_social_media_report";
     }
 
     interface TABLES {

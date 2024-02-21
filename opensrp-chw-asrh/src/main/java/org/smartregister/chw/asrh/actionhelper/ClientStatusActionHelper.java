@@ -13,12 +13,12 @@ import timber.log.Timber;
 /**
  * ASRH Activity Action Helper
  */
-public class AsrhActivityActionHelper extends AsrhVisitActionHelper {
+public class ClientStatusActionHelper extends AsrhVisitActionHelper {
     protected Context context;
     protected MemberObject memberObject;
-    protected String asrhActivityType;
+    protected String clientStatus;
 
-    public AsrhActivityActionHelper(Context context, MemberObject memberObject) {
+    public ClientStatusActionHelper(Context context, MemberObject memberObject) {
         this.context = context;
         this.memberObject = memberObject;
     }
@@ -37,7 +37,7 @@ public class AsrhActivityActionHelper extends AsrhVisitActionHelper {
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            asrhActivityType = JsonFormUtils.getValue(jsonObject, "activity_type");
+            clientStatus = JsonFormUtils.getValue(jsonObject, "client_status");
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -50,7 +50,7 @@ public class AsrhActivityActionHelper extends AsrhVisitActionHelper {
 
     @Override
     public BaseAsrhVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(asrhActivityType)) {
+        if (StringUtils.isNotBlank(clientStatus)) {
             return BaseAsrhVisitAction.Status.COMPLETED;
         } else {
             return BaseAsrhVisitAction.Status.PENDING;

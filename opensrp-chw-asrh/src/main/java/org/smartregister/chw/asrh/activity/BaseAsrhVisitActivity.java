@@ -23,15 +23,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.asrh.Asrh;
-import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
-import org.smartregister.chw.asrh.dao.AsrhDao;
-import org.smartregister.chw.asrh.interactor.BaseAsrhVisitInteractor;
-import org.smartregister.chw.asrh.presenter.BaseAsrhVisitPresenter;
-import org.smartregister.chw.asrh.util.Constants;
 import org.smartregister.chw.asrh.R;
 import org.smartregister.chw.asrh.adapter.BaseAsrhVisitAdapter;
+import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
+import org.smartregister.chw.asrh.dao.AsrhDao;
 import org.smartregister.chw.asrh.domain.MemberObject;
+import org.smartregister.chw.asrh.interactor.BaseAsrhVisitInteractor;
 import org.smartregister.chw.asrh.model.BaseAsrhVisitAction;
+import org.smartregister.chw.asrh.presenter.BaseAsrhVisitPresenter;
+import org.smartregister.chw.asrh.util.Constants;
 import org.smartregister.view.activity.SecuredActivity;
 
 import java.text.MessageFormat;
@@ -120,39 +120,26 @@ public class BaseAsrhVisitActivity extends SecuredActivity implements BaseAsrhVi
     @Override
     public void initializeActions(LinkedHashMap<String, BaseAsrhVisitAction> map) {
         //Necessary evil to rearrange the actions according to a specific arrangement
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_hiv_status))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_hiv_status), map.get(getString(R.string.sbc_visit_action_title_hiv_status)));
+        if (map.containsKey(getString(R.string.asrh_client_status))) {
+            actionList.put(getString(R.string.asrh_client_status), map.get(getString(R.string.asrh_client_status)));
         }
 
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_sbc_activity))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_sbc_activity), map.get(getString(R.string.sbc_visit_action_title_sbc_activity)));
+        if (map.containsKey(getString(R.string.asrh_health_education))) {
+            actionList.put(getString(R.string.asrh_health_education), map.get(getString(R.string.asrh_health_education)));
         }
 
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_services_survey))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_services_survey), map.get(getString(R.string.sbc_visit_action_title_services_survey)));
+        if (map.containsKey(getString(R.string.asrh_sexual_reproductive_health_education))) {
+            actionList.put(getString(R.string.asrh_sexual_reproductive_health_education), map.get(getString(R.string.asrh_sexual_reproductive_health_education)));
         }
 
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_health_education))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_health_education), map.get(getString(R.string.sbc_visit_action_title_health_education)));
+        if (map.containsKey(getString(R.string.asrh_mental_health_and_substance_abuse))) {
+            actionList.put(getString(R.string.asrh_mental_health_and_substance_abuse), map.get(getString(R.string.asrh_mental_health_and_substance_abuse)));
         }
 
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_health_education_on_hiv_interventions))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_health_education_on_hiv_interventions), map.get(getString(R.string.sbc_visit_action_title_health_education_on_hiv_interventions)));
-        }
-
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_health_education_sbc_materials))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_health_education_sbc_materials), map.get(getString(R.string.sbc_visit_action_title_health_education_sbc_materials)));
-        }
-
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_art_and_condom_education))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_art_and_condom_education), map.get(getString(R.string.sbc_visit_action_title_art_and_condom_education)));
-        }
-
-        if (map.containsKey(getString(R.string.sbc_visit_action_title_comments))) {
-            actionList.put(getString(R.string.sbc_visit_action_title_comments), map.get(getString(R.string.sbc_visit_action_title_comments)));
+        if (map.containsKey(getString(R.string.asrh_facilitation_methods))) {
+            actionList.put(getString(R.string.asrh_facilitation_methods), map.get(getString(R.string.asrh_facilitation_methods)));
         }
         //====================End of Necessary evil ====================================
-
 
 
         for (Map.Entry<String, BaseAsrhVisitAction> entry : map.entrySet()) {

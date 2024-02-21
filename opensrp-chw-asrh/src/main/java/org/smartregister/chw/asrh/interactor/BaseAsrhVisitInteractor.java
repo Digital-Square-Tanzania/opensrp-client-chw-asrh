@@ -11,25 +11,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import org.smartregister.chw.asrh.Asrh;
-import org.smartregister.chw.asrh.actionhelper.ArtAdherenceCounsellingActionHelper;
-import org.smartregister.chw.asrh.actionhelper.CommentsActionHelper;
-import org.smartregister.chw.asrh.actionhelper.HealthEducationActionHelper;
-import org.smartregister.chw.asrh.actionhelper.HealthEducationOnHivInterventionsActionHelper;
-import org.smartregister.chw.asrh.actionhelper.HivHealthEducationAsrhMaterialsActionHelper;
-import org.smartregister.chw.asrh.actionhelper.AsrhActivityActionHelper;
-import org.smartregister.chw.asrh.actionhelper.AsrhVisitActionHelper;
-import org.smartregister.chw.asrh.actionhelper.ServicesSurveyActionHelper;
-import org.smartregister.chw.asrh.dao.AsrhDao;
-import org.smartregister.chw.asrh.util.Constants;
-import org.smartregister.chw.asrh.util.JsonFormUtils;
 import org.smartregister.chw.asrh.R;
+import org.smartregister.chw.asrh.actionhelper.AsrhVisitActionHelper;
+import org.smartregister.chw.asrh.actionhelper.ClientStatusActionHelper;
+import org.smartregister.chw.asrh.actionhelper.FacilitationMethodsActionHelper;
+import org.smartregister.chw.asrh.actionhelper.HealthEducationActionHelper;
+import org.smartregister.chw.asrh.actionhelper.MentalHealthAndSubstanceAbuseActionHelper;
+import org.smartregister.chw.asrh.actionhelper.SexualReproductiveHealthEducationActionHelper;
 import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
+import org.smartregister.chw.asrh.dao.AsrhDao;
 import org.smartregister.chw.asrh.domain.MemberObject;
 import org.smartregister.chw.asrh.domain.Visit;
 import org.smartregister.chw.asrh.domain.VisitDetail;
 import org.smartregister.chw.asrh.model.BaseAsrhVisitAction;
 import org.smartregister.chw.asrh.repository.VisitRepository;
 import org.smartregister.chw.asrh.util.AppExecutors;
+import org.smartregister.chw.asrh.util.Constants;
+import org.smartregister.chw.asrh.util.JsonFormUtils;
 import org.smartregister.chw.asrh.util.NCUtils;
 import org.smartregister.chw.asrh.util.VisitUtils;
 import org.smartregister.clientandeventmodel.Event;
@@ -101,32 +99,14 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
     public void calculateActions(final BaseAsrhVisitContract.View view, MemberObject memberObject, final BaseAsrhVisitContract.InteractorCallBack callBack) {
         mContext = view.getContext();
         this.callBack = callBack;
-        boolean isFirstVisit;
-        if (view.getEditMode()) {
-            Visit lastVisit = asrh.visitRepository().getLatestVisit(memberObject.getBaseEntityId(), Constants.EVENT_TYPE.ASRH_FOLLOW_UP_VISIT);
-            isFirstVisit = asrh.visitRepository().getVisits(memberObject.getBaseEntityId(), Constants.EVENT_TYPE.ASRH_FOLLOW_UP_VISIT).size() < 2;
-            if (lastVisit != null) {
-                details = VisitUtils.getVisitGroups(asrh.visitDetailsRepository().getVisits(lastVisit.getVisitId()));
-            }
-        } else {
-            isFirstVisit = asrh.visitRepository().getLatestVisit(memberObject.getBaseEntityId(), Constants.EVENT_TYPE.ASRH_FOLLOW_UP_VISIT) == null;
-        }
 
         final Runnable runnable = () -> {
             try {
-                if (!isFirstVisit && !memberObject.getHivStatus().contains("positive"))
-                    evaluateHivStatus(memberObject, details);
-
-                evaluateSbcActivity(memberObject, details);
-                evaluateServicesSurvey(memberObject, details);
+                evaluateClientStatus(memberObject, details);
                 evaluateHealthEducation(memberObject, details);
-                evaluateHealthEducationOnHivInterventions(memberObject, details);
-                evaluateHealthEducationSbcMaterials(memberObject, details);
-
-                if (memberObject.getHivStatus().contains("positive"))
-                    evaluateArtAdherenceCounselling(memberObject, details);
-
-                evaluateComments(memberObject, details);
+                evaluateSexualReproductiveHealthEducation(memberObject, details);
+                evaluateMentalHealthAndSubstanceAbuse(memberObject, details);
+                evaluateFacilitationMethod(memberObject, details);
 
             } catch (BaseAsrhVisitAction.ValidationException e) {
                 Timber.e(e);
@@ -138,80 +118,38 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
         appExecutors.diskIO().execute(runnable);
     }
 
-    protected void evaluateHivStatus(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new HivStatusActionHelper(mContext, memberObject);
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_hiv_status);
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_HIV_STATUS).build();
-        actionList.put(actionName, action);
-    }
-
-    protected void evaluateSbcActivity(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new AsrhActivityActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_sbc_activity);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_ACTIVITY).build();
-
-        actionList.put(actionName, action);
-    }
-
-    protected void evaluateServicesSurvey(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new ServicesSurveyActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_services_survey);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_SERVICE_SURVEY).build();
-
+    protected void evaluateClientStatus(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new ClientStatusActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_client_status);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_CLIENT_STATUS).build();
         actionList.put(actionName, action);
     }
 
     protected void evaluateHealthEducation(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
         AsrhVisitActionHelper actionHelper = new HealthEducationActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_health_education);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_HEALTH_EDUCATION).build();
-
+        String actionName = mContext.getString(R.string.asrh_health_education);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_HEALTH_EDUCATION).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateHealthEducationOnHivInterventions(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new HealthEducationOnHivInterventionsActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_health_education_on_hiv_interventions);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_HEALTH_EDUCATION_ON_HIV).build();
-
+    protected void evaluateSexualReproductiveHealthEducation(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new SexualReproductiveHealthEducationActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_sexual_reproductive_health_education);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_SEXUAL_REPRODUCTIVE_HEALTH_EDUCATION).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateHealthEducationSbcMaterials(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new HivHealthEducationAsrhMaterialsActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_health_education_sbc_materials);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.HEALTH_EDUCATION_SBC_MATERIALS).build();
-
+    protected void evaluateMentalHealthAndSubstanceAbuse(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new MentalHealthAndSubstanceAbuseActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_mental_health_and_substance_abuse);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_MENTAL_HEALTH_AND_SUBSTANCE_ABUSE).build();
         actionList.put(actionName, action);
     }
 
-    protected void evaluateArtAdherenceCounselling(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new ArtAdherenceCounsellingActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_art_and_condom_education);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_ART_CONDOM_EDUCATION).build();
-
-        actionList.put(actionName, action);
-    }
-
-    protected void evaluateComments(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new CommentsActionHelper(mContext, memberObject);
-
-        String actionName = mContext.getString(R.string.sbc_visit_action_title_comments);
-
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(true).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.SBC_COMMENTS).build();
-
+    protected void evaluateFacilitationMethod(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new FacilitationMethodsActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_facilitation_methods);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_FACILITATION_METHOD).build();
         actionList.put(actionName, action);
     }
 
@@ -411,58 +349,6 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
 
     protected String getTableName() {
         return Constants.TABLES.ARSH_REGISTER;
-    }
-
-    class HivStatusActionHelper extends AsrhVisitActionHelper {
-        protected Context context;
-        protected MemberObject memberObject;
-        protected String hivStatus;
-
-        public HivStatusActionHelper(Context context, MemberObject memberObject) {
-            this.context = context;
-            this.memberObject = memberObject;
-        }
-
-        /**
-         * set preprocessed status to be inert
-         *
-         * @return null
-         */
-        @Override
-        public String getPreProcessed() {
-            return null;
-        }
-
-        @Override
-        public void onPayloadReceived(String jsonPayload) {
-            try {
-                JSONObject jsonObject = new JSONObject(jsonPayload);
-                hivStatus = JsonFormUtils.getValue(jsonObject, "hiv_status");
-
-                if(hivStatus.contains("positive")){
-                    evaluateArtAdherenceCounselling(memberObject, details);
-                }else{
-                    actionList.remove(mContext.getString(R.string.sbc_visit_action_title_art_and_condom_education));
-                }
-                appExecutors.mainThread().execute(() -> callBack.preloadActions(actionList));
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-        }
-
-        @Override
-        public String evaluateSubTitle() {
-            return null;
-        }
-
-        @Override
-        public BaseAsrhVisitAction.Status evaluateStatusOnPayload() {
-            if (StringUtils.isNotBlank(hivStatus)) {
-                return BaseAsrhVisitAction.Status.COMPLETED;
-            } else {
-                return BaseAsrhVisitAction.Status.PENDING;
-            }
-        }
     }
 
 }

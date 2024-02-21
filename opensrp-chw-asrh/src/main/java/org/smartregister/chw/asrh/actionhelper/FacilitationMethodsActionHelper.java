@@ -13,12 +13,12 @@ import timber.log.Timber;
 /**
  * ASRH Activity Action Helper
  */
-public class CommentsActionHelper extends AsrhVisitActionHelper {
+public class FacilitationMethodsActionHelper extends AsrhVisitActionHelper {
     protected Context context;
     protected MemberObject memberObject;
-    protected String comments;
+    protected String facilitationMethods;
 
-    public CommentsActionHelper(Context context, MemberObject memberObject) {
+    public FacilitationMethodsActionHelper(Context context, MemberObject memberObject) {
         this.context = context;
         this.memberObject = memberObject;
     }
@@ -37,7 +37,7 @@ public class CommentsActionHelper extends AsrhVisitActionHelper {
     public void onPayloadReceived(String jsonPayload) {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
-            comments = JsonFormUtils.getValue(jsonObject, "sbc_comments");
+            facilitationMethods = JsonFormUtils.getValue(jsonObject, "facilitation_methods");
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -50,7 +50,7 @@ public class CommentsActionHelper extends AsrhVisitActionHelper {
 
     @Override
     public BaseAsrhVisitAction.Status evaluateStatusOnPayload() {
-        if (StringUtils.isNotBlank(comments)) {
+        if (StringUtils.isNotBlank(facilitationMethods)) {
             return BaseAsrhVisitAction.Status.COMPLETED;
         } else {
             return BaseAsrhVisitAction.Status.PENDING;

@@ -62,7 +62,7 @@
         "openmrs_entity_id": "provided_sexual_reproductive_health_health_education",
         "type": "check_box",
         "combine_checkbox_option_values": "true",
-        "hint": "Select Sexual reproductive health education provided",
+        "label": "Select Sexual reproductive health education provided",
         "options": [
           {
             "key": "developmental_stages_during_adolescence",

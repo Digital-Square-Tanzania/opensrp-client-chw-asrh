@@ -62,7 +62,7 @@
         "openmrs_entity_id": "education_on_mental_health_and_substance_abuse_provided",
         "type": "check_box",
         "combine_checkbox_option_values": "true",
-        "hint": "Education on Mental health and substance abuse",
+        "label": "Education on Mental health and substance abuse",
         "options": [
           {
             "key": "negative_effects_of_substance_abuse",
