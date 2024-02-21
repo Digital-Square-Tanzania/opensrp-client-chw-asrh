@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.smartregister.chw.sbc_sample.activity.EntryActivity">
+    tools:context="org.smartregister.chw.asrh_sample.org.smartregister.chw.asrh_sample.activity.EntryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Social Behavioral Change (SBC) Module Sample App"
+            app:title="Social Behavioral Change (ASRH) Module Sample App"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_family"
+        android:enabled="true"
+        android:icon="@mipmap/ic_home"
+        android:title="@string/home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_asrh_mobilization"
+        android:enabled="true"
+        android:icon="@mipmap/ic_jobaids"
+        android:title="@string/asrh_mobilization"
+        app:showAsAction="ifRoom" />
+</menu>
