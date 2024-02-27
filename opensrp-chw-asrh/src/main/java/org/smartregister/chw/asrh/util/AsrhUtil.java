@@ -23,7 +23,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 import org.opensrp.api.constants.Gender;
 import org.smartregister.chw.asrh.R;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.contract.BaseAsrhCallDialogContract;
 import org.smartregister.chw.asrh.dao.AsrhDao;
 import org.smartregister.clientandeventmodel.Event;
@@ -63,11 +63,11 @@ public class AsrhUtil {
     }
 
     public static ECSyncHelper getSyncHelper() {
-        return Asrh.getInstance().getEcSyncHelper();
+        return AsrhLibrary.getInstance().getEcSyncHelper();
     }
 
     public static ClientProcessorForJava getClientProcessorForJava() {
-        return Asrh.getInstance().getClientProcessorForJava();
+        return AsrhLibrary.getInstance().getClientProcessorForJava();
     }
 
     public static Spanned fromHtml(String text) {
@@ -117,7 +117,7 @@ public class AsrhUtil {
     }
 
     public static void saveFormEvent(final String jsonString) throws Exception {
-        AllSharedPreferences allSharedPreferences = Asrh.getInstance().context().allSharedPreferences();
+        AllSharedPreferences allSharedPreferences = AsrhLibrary.getInstance().context().allSharedPreferences();
         Event baseEvent = AsrhJsonFormUtils.processJsonForm(allSharedPreferences, jsonString);
         AsrhUtil.processEvent(allSharedPreferences, baseEvent);
     }

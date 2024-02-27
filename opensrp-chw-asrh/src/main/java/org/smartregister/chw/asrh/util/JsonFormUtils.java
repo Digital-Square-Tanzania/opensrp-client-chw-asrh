@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.domain.VisitDetail;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.tag.FormTag;
@@ -107,7 +107,7 @@ public class JsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static Event createUntaggedEvent(String baseEntityId, String eventType, String table) {
 
         try {
-            AllSharedPreferences allSharedPreferences = Asrh.getInstance().context().allSharedPreferences();
+            AllSharedPreferences allSharedPreferences = AsrhLibrary.getInstance().context().allSharedPreferences();
 
             return org.smartregister.util.JsonFormUtils.createEvent(new JSONArray(), new JSONObject(), formTag(allSharedPreferences), baseEntityId, eventType, table);
 
@@ -136,8 +136,8 @@ public class JsonFormUtils extends org.smartregister.util.JsonFormUtils {
     public static FormTag formTag(AllSharedPreferences allSharedPreferences) {
         FormTag formTag = new FormTag();
         formTag.providerId = allSharedPreferences.fetchRegisteredANM();
-        formTag.appVersion = Asrh.getInstance().getApplicationVersion();
-        formTag.databaseVersion = Asrh.getInstance().getDatabaseVersion();
+        formTag.appVersion = AsrhLibrary.getInstance().getApplicationVersion();
+        formTag.databaseVersion = AsrhLibrary.getInstance().getDatabaseVersion();
         return formTag;
     }
 
@@ -149,8 +149,8 @@ public class JsonFormUtils extends org.smartregister.util.JsonFormUtils {
         event.setTeam(allSharedPreferences.fetchDefaultTeam(providerId));
         event.setTeamId(allSharedPreferences.fetchDefaultTeamId(providerId));
 
-        event.setClientApplicationVersion(Asrh.getInstance().getApplicationVersion());
-        event.setClientDatabaseVersion(Asrh.getInstance().getDatabaseVersion());
+        event.setClientApplicationVersion(AsrhLibrary.getInstance().getApplicationVersion());
+        event.setClientDatabaseVersion(AsrhLibrary.getInstance().getDatabaseVersion());
     }
 
     public static String locationId(AllSharedPreferences allSharedPreferences) {

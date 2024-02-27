@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.domain.Visit;
 import org.smartregister.chw.asrh.domain.VisitDetail;
 import org.smartregister.clientandeventmodel.Event;
@@ -127,7 +127,7 @@ public class NCUtils {
     }
 
     public static org.smartregister.Context context() {
-        return Asrh.getInstance().context();
+        return AsrhLibrary.getInstance().context();
     }
 
 
@@ -146,11 +146,11 @@ public class NCUtils {
     }
 
     public static SimpleDateFormat getSourceDateFormat() {
-        return new SimpleDateFormat(Asrh.getInstance().getSourceDateFormat(), Locale.getDefault());
+        return new SimpleDateFormat(AsrhLibrary.getInstance().getSourceDateFormat(), Locale.getDefault());
     }
 
     public static SimpleDateFormat getSaveDateFormat() {
-        return new SimpleDateFormat(Asrh.getInstance().getSaveDateFormat(), Locale.getDefault());
+        return new SimpleDateFormat(AsrhLibrary.getInstance().getSaveDateFormat(), Locale.getDefault());
     }
 
     public static void addEvent(AllSharedPreferences allSharedPreferences, Event baseEvent) throws Exception {
@@ -180,11 +180,11 @@ public class NCUtils {
     }
 
     public static ECSyncHelper getSyncHelper() {
-        return Asrh.getInstance().getEcSyncHelper();
+        return AsrhLibrary.getInstance().getEcSyncHelper();
     }
 
     public static ClientProcessorForJava getClientProcessorForJava() {
-        return Asrh.getInstance().getClientProcessorForJava();
+        return AsrhLibrary.getInstance().getClientProcessorForJava();
     }
 
     public static Visit eventToVisit(Event event, String visitID) throws JSONException {
@@ -283,28 +283,28 @@ public class NCUtils {
 
     public static void processHomeVisit(EventClient baseEvent, SQLiteDatabase database, String parentEventType) {
         try {
-            Visit visit = Asrh.getInstance().visitRepository().getVisitByFormSubmissionID(baseEvent.getEvent().getFormSubmissionId());
+            Visit visit = AsrhLibrary.getInstance().visitRepository().getVisitByFormSubmissionID(baseEvent.getEvent().getFormSubmissionId());
             if (visit == null) {
                 visit = eventToVisit(baseEvent.getEvent());
 
                 if (StringUtils.isNotBlank(parentEventType) && !parentEventType.equalsIgnoreCase(visit.getVisitType())) {
-                    String parentVisitID = Asrh.getInstance().visitRepository().getParentVisitEventID(visit.getBaseEntityId(), parentEventType, visit.getDate());
+                    String parentVisitID = AsrhLibrary.getInstance().visitRepository().getParentVisitEventID(visit.getBaseEntityId(), parentEventType, visit.getDate());
                     visit.setParentVisitID(parentVisitID);
                 }
 
                 if (database != null) {
-                    Asrh.getInstance().visitRepository().addVisit(visit, database);
+                    AsrhLibrary.getInstance().visitRepository().addVisit(visit, database);
                 } else {
-                    Asrh.getInstance().visitRepository().addVisit(visit);
+                    AsrhLibrary.getInstance().visitRepository().addVisit(visit);
                 }
                 if (visit.getVisitDetails() != null) {
                     for (Map.Entry<String, List<VisitDetail>> entry : visit.getVisitDetails().entrySet()) {
                         if (entry.getValue() != null) {
                             for (VisitDetail detail : entry.getValue()) {
                                 if (database != null) {
-                                    Asrh.getInstance().visitDetailsRepository().addVisitDetails(detail, database);
+                                    AsrhLibrary.getInstance().visitDetailsRepository().addVisitDetails(detail, database);
                                 } else {
-                                    Asrh.getInstance().visitDetailsRepository().addVisitDetails(detail);
+                                    AsrhLibrary.getInstance().visitDetailsRepository().addVisitDetails(detail);
                                 }
                             }
                         }

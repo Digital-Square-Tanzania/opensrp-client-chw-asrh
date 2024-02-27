@@ -17,7 +17,7 @@ public interface Constants {
     }
 
     interface EVENT_TYPE {
-        String ASRH_REGISTRATION = "ASRH Registration";
+        String ASRH_REGISTRATION = "ASRH Enrollment";
         String ASRH_FOLLOW_UP_VISIT = "ASRH Follow-up Visit";
 
         String VOID_EVENT = "Void Event";
@@ -41,13 +41,9 @@ public interface Constants {
     }
 
     interface TABLES {
-        String ARSH_REGISTER = "ec_asrh_register";
+        String ASRH_REGISTER = "ec_asrh_register";
 
         String ASRH_FOLLOW_UP = "ec_asrh_follow_up_visit";
-
-        String ASRH_MOBILIZATION_SESSIONS = "ec_asrh_mobilization_session";
-
-        String ASRH_MONTHLY_SOCIAL_MEDIA_REPORT = "ec_asrh_monthly_social_media_report";
 
     }
 

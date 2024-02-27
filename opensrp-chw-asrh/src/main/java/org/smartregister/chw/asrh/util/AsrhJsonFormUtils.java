@@ -1,5 +1,7 @@
 package org.smartregister.chw.asrh.util;
 
+import static org.smartregister.client.utils.constants.JsonFormConstants.JSON_FORM_KEY.GLOBAL;
+
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,7 +9,8 @@ import org.apache.commons.lang3.tuple.Triple;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
+import org.smartregister.chw.asrh.dao.AsrhDao;
 import org.smartregister.clientandeventmodel.Event;
 import org.smartregister.domain.tag.FormTag;
 import org.smartregister.repository.AllSharedPreferences;
@@ -73,7 +76,7 @@ public class AsrhJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         String encounter_type = jsonForm.optString(Constants.JSON_FORM_EXTRA.ENCOUNTER_TYPE);
 
         if (Constants.EVENT_TYPE.ASRH_REGISTRATION.equals(encounter_type)) {
-            encounter_type = Constants.TABLES.ARSH_REGISTER;
+            encounter_type = Constants.TABLES.ASRH_REGISTER;
         } else if (Constants.EVENT_TYPE.ASRH_FOLLOW_UP_VISIT.equals(encounter_type)) {
             encounter_type = Constants.TABLES.ASRH_FOLLOW_UP;
         }
@@ -83,8 +86,8 @@ public class AsrhJsonFormUtils extends org.smartregister.util.JsonFormUtils {
     protected static FormTag formTag(AllSharedPreferences allSharedPreferences) {
         FormTag formTag = new FormTag();
         formTag.providerId = allSharedPreferences.fetchRegisteredANM();
-        formTag.appVersion = Asrh.getInstance().getApplicationVersion();
-        formTag.databaseVersion = Asrh.getInstance().getDatabaseVersion();
+        formTag.appVersion = AsrhLibrary.getInstance().getApplicationVersion();
+        formTag.databaseVersion = AsrhLibrary.getInstance().getDatabaseVersion();
         return formTag;
     }
 
@@ -96,8 +99,8 @@ public class AsrhJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         event.setTeam(allSharedPreferences.fetchDefaultTeam(providerId));
         event.setTeamId(allSharedPreferences.fetchDefaultTeamId(providerId));
 
-        event.setClientApplicationVersion(Asrh.getInstance().getApplicationVersion());
-        event.setClientDatabaseVersion(Asrh.getInstance().getDatabaseVersion());
+        event.setClientApplicationVersion(AsrhLibrary.getInstance().getApplicationVersion());
+        event.setClientDatabaseVersion(AsrhLibrary.getInstance().getDatabaseVersion());
     }
 
     private static String locationId(AllSharedPreferences allSharedPreferences) {
@@ -115,10 +118,13 @@ public class AsrhJsonFormUtils extends org.smartregister.util.JsonFormUtils {
         jsonObject.getJSONObject(METADATA).put(ENCOUNTER_LOCATION, currentLocationId);
         jsonObject.put(org.smartregister.util.JsonFormUtils.ENTITY_ID, entityId);
         jsonObject.put(DBConstants.KEY.RELATIONAL_ID, entityId);
+
+        jsonObject.getJSONObject(GLOBAL).put("age", AsrhDao.getClientAge(entityId));
+        jsonObject.getJSONObject(GLOBAL).put("sex", AsrhDao.getClientSex(entityId));
     }
 
     public static JSONObject getFormAsJson(String formName) throws Exception {
-        return FormUtils.getInstance(Asrh.getInstance().context().applicationContext()).getFormJson(formName);
+        return FormUtils.getInstance(AsrhLibrary.getInstance().context().applicationContext()).getFormJson(formName);
     }
 
 }

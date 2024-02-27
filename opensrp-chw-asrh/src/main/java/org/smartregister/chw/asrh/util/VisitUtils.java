@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.json.JSONObject;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.dao.AsrhDao;
 import org.smartregister.chw.asrh.domain.Visit;
 import org.smartregister.chw.asrh.domain.VisitDetail;
@@ -65,11 +65,11 @@ public class VisitUtils {
 
 
     public static List<Visit> getVisitsOnly(String memberID, String visitName) {
-        return new ArrayList<>(Asrh.getInstance().visitRepository().getVisits(memberID, visitName));
+        return new ArrayList<>(AsrhLibrary.getInstance().visitRepository().getVisits(memberID, visitName));
     }
 
     public static List<VisitDetail> getVisitDetailsOnly(String visitID) {
-        return Asrh.getInstance().visitDetailsRepository().getVisits(visitID);
+        return AsrhLibrary.getInstance().visitDetailsRepository().getVisits(visitID);
     }
 
 
@@ -96,7 +96,7 @@ public class VisitUtils {
      * @throws Exception
      */
     public static void processVisits(String baseEntityID) throws Exception {
-        processVisits(Asrh.getInstance().visitRepository(), Asrh.getInstance().visitDetailsRepository(), baseEntityID);
+        processVisits(AsrhLibrary.getInstance().visitRepository(), AsrhLibrary.getInstance().visitDetailsRepository(), baseEntityID);
     }
 
     public static void processVisits(VisitRepository visitRepository, VisitDetailsRepository visitDetailsRepository, String baseEntityID) throws Exception {
@@ -121,7 +121,7 @@ public class VisitUtils {
 
                 baseEvent.addDetails(JsonFormUtils.HOME_VISIT_GROUP, visitGroupId);
 
-                AllSharedPreferences allSharedPreferences = Asrh.getInstance().context().allSharedPreferences();
+                AllSharedPreferences allSharedPreferences = AsrhLibrary.getInstance().context().allSharedPreferences();
                 NCUtils.addEvent(allSharedPreferences, baseEvent);
 
                 // process details
@@ -135,7 +135,7 @@ public class VisitUtils {
         NCUtils.startClientProcessing();
 
         // process vaccines and services
-        Context context = Asrh.getInstance().context().applicationContext();
+        Context context = AsrhLibrary.getInstance().context().applicationContext();
 
     }
 
@@ -186,8 +186,8 @@ public class VisitUtils {
 
     public static void deleteProcessedVisit(String visitID, String baseEntityId) {
         // check if the event
-        AllSharedPreferences allSharedPreferences = Asrh.getInstance().context().allSharedPreferences();
-        Visit visit = Asrh.getInstance().visitRepository().getVisitByVisitId(visitID);
+        AllSharedPreferences allSharedPreferences = AsrhLibrary.getInstance().context().allSharedPreferences();
+        Visit visit = AsrhLibrary.getInstance().visitRepository().getVisitByVisitId(visitID);
         if (visit == null || !visit.getProcessed()) return;
 
         Event processedEvent = AsrhDao.getEventByFormSubmissionId(visit.getFormSubmissionId());
