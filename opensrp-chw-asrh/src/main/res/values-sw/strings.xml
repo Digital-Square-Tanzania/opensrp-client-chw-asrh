@@ -1,7 +1,7 @@
 <resources>
     <string name="error_unable_to_start_form">Hitilafu imetokea wakati wa kuanzisha fomu</string>
     <string name="error_unable_to_save_form">Hitilafu imetokea wakati wa kuhifadhi fomu</string>
-    <string name="sbc">ASRH for HIV</string>
+    <string name="asrh">Afya ya Uzazi kwa Vijana</string>
     <string name="add_member">Sajili mwanafamilia</string>
     <string name="sort">Panga</string>
     <string name="home">Nyumbani</string>
@@ -9,8 +9,8 @@
     <string name="scan_qr">Scan QR</string>
     <string name="job_aids">Vitendea kazi</string>
     <string name="saving_dialog_title">Kuhifadhi</string>
-    <string name="malaria_followup_visit">Tembeleo la ufuatiliaji</string>
-    <string name="record_sbc">Rekodi ufuatiliaji wa ASRH</string>
+    <string name="asrh_followup_visit">Tembeleo la ufuatiliaji</string>
+    <string name="record_asrh">Rekodi ufuatiliaji wa ASRH</string>
     <string name="return_to_previous_asrh_clients_page">Rudi kwenye wateja wote wa malaria</string>
     <string name="last_visit_40_days_ago">Tembeleo la mwisho %1$s uliyopita</string>
     <string name="view_asrh_followp_history">Angalia historia ya huduma</string>
@@ -25,7 +25,7 @@
     <string name="vaccine_service_upcoming"><![CDATA[%1$s <font color=#7f7f7f>inakaribia (%2$s)</font></b>]]></string>
     <string name="vaccine_service_overdue"><![CDATA[%1$s <font color=#f04646>muda umepita (%2$s)</font></b>]]></string>
     <string name="vaccine_service_due"><![CDATA[%1$s <font color=#000000>imefika (%2$s)</font></b>]]></string>
-    <string name="call_sbc_client">Mteja wa Malaria</string>
+    <string name="call_asrh_client">Mteja wa Malaria</string>
     <string name="head_of_family">Mkuu wa kaya</string>
     <string name="asrh_client">Mteja wa malaria</string>
     <string name="copy_to_clipboard">Nakili namba ya simu</string>
@@ -46,5 +46,6 @@
     <string name="edit">HARIRI</string>
     <string name="male">Me</string>
     <string name="female">Ke</string>
+    <string name="issue_referral">Toa Rufaa</string>
 
 </resources>

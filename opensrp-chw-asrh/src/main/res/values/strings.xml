@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">test</string>
     <string name="error_unable_to_start_form">An error occurred when starting the form</string>
     <string name="error_unable_to_save_form">An error occurred when saving the form</string>
-    <string name="sbc">ASRH for HIV</string>
+    <string name="asrh">ASRH</string>
     <string name="sbc_monthly_social_media_report">ASRH Mothly Social Media Reports</string>
     <string name="add_member">Add Member</string>
     <string name="sort">Sort</string>
@@ -12,8 +12,8 @@
     <string name="job_aids">Job Aids</string>
     <string name="saving_dialog_title">Saving</string>
     <string name="interpunct" translatable="false">\u00b7</string>
-    <string name="malaria_followup_visit">FOLLOWUP\nVISIT</string>
-    <string name="record_sbc">Record ASRH follow-up</string>
+    <string name="asrh_followup_visit">FOLLOWUP\nVISIT</string>
+    <string name="record_asrh">Record ASRH follow-up</string>
     <string name="return_to_previous_asrh_clients_page">Return all ASRH Clients</string>
     <string name="last_visit_40_days_ago">Last visit %1$s ago</string>
     <string name="view_asrh_followp_history">View followup history</string>
@@ -28,7 +28,7 @@
     <string name="vaccine_service_upcoming"><![CDATA[%1$s <font color=#7f7f7f>upcoming (%2$s)</font></b>]]></string>
     <string name="vaccine_service_overdue"><![CDATA[%1$s <font color=#f04646>overdue (%2$s)</font></b>]]></string>
     <string name="vaccine_service_due"><![CDATA[%1$s <font color=#000000>due (%2$s)</font></b>]]></string>
-    <string name="call_sbc_client">ASRH Client</string>
+    <string name="call_asrh_client">ASRH Client</string>
     <string name="head_of_family">Head of family</string>
     <string name="asrh_client">ASRH Client</string>
     <string name="copy_to_clipboard">Copy to clipboard</string>
@@ -53,14 +53,14 @@
 
     <string name="error_unable_save_home_visit">unable to save home visit</string>
     <string name="optional">optional</string>
-    <string name="asrh_visit">sbc visit</string>
+    <string name="asrh_visit">ASRH Visit</string>
     <string name="asrh_client_status">Client Status</string>
     <string name="asrh_health_education">Health Education &amp; Counselling</string>
     <string name="asrh_sexual_reproductive_health_education">Sexual Reproductive health Education</string>
     <string name="asrh_mental_health_and_substance_abuse">Mental Health &amp; Substance Abuse</string>
     <string name="asrh_facilitation_methods">Facilitation Methods</string>
 
-    <string name="sbc_registration">ASRH Registration</string>
-    <string name="asrh_mobilization">ASRH Mobilization</string>
+    <string name="asrh_registration">ASRH Registration</string>
+    <string name="issue_referral">Issue Referral</string>
 
 </resources>
