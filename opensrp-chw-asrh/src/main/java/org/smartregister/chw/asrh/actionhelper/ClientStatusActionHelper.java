@@ -13,7 +13,7 @@ import timber.log.Timber;
 /**
  * ASRH Activity Action Helper
  */
-public class ClientStatusActionHelper extends AsrhVisitActionHelper {
+public abstract class ClientStatusActionHelper extends AsrhVisitActionHelper {
     protected Context context;
     protected MemberObject memberObject;
     protected String clientStatus;
@@ -38,6 +38,7 @@ public class ClientStatusActionHelper extends AsrhVisitActionHelper {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
             clientStatus = JsonFormUtils.getValue(jsonObject, "client_status");
+            processClientStatus(clientStatus);
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -56,4 +57,7 @@ public class ClientStatusActionHelper extends AsrhVisitActionHelper {
             return BaseAsrhVisitAction.Status.PENDING;
         }
     }
+
+
+    public abstract void processClientStatus(String clientStatus);
 }

@@ -9,8 +9,7 @@ import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
-import org.json.JSONObject;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.R;
 import org.smartregister.chw.asrh.actionhelper.AsrhVisitActionHelper;
 import org.smartregister.chw.asrh.actionhelper.ClientStatusActionHelper;
@@ -47,7 +46,7 @@ import timber.log.Timber;
 
 public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor {
 
-    private final Asrh asrh;
+    private final AsrhLibrary asrhLibrary;
     private final LinkedHashMap<String, BaseAsrhVisitAction> actionList;
     protected AppExecutors appExecutors;
     private ECSyncHelper syncHelper;
@@ -57,15 +56,15 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
     private BaseAsrhVisitContract.InteractorCallBack callBack;
 
     @VisibleForTesting
-    public BaseAsrhVisitInteractor(AppExecutors appExecutors, Asrh Asrh, ECSyncHelper syncHelper) {
+    public BaseAsrhVisitInteractor(AppExecutors appExecutors, AsrhLibrary AsrhLibrary, ECSyncHelper syncHelper) {
         this.appExecutors = appExecutors;
-        this.asrh = Asrh;
+        this.asrhLibrary = AsrhLibrary;
         this.syncHelper = syncHelper;
         this.actionList = new LinkedHashMap<>();
     }
 
     public BaseAsrhVisitInteractor() {
-        this(new AppExecutors(), Asrh.getInstance(), Asrh.getInstance().getEcSyncHelper());
+        this(new AppExecutors(), AsrhLibrary.getInstance(), AsrhLibrary.getInstance().getEcSyncHelper());
     }
 
     @Override
@@ -99,15 +98,16 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
     public void calculateActions(final BaseAsrhVisitContract.View view, MemberObject memberObject, final BaseAsrhVisitContract.InteractorCallBack callBack) {
         mContext = view.getContext();
         this.callBack = callBack;
+        if (view.getEditMode()) {
+            Visit lastVisit = asrhLibrary.visitRepository().getLatestVisit(memberObject.getBaseEntityId(), Constants.EVENT_TYPE.ASRH_FOLLOW_UP_VISIT);
+            if (lastVisit != null) {
+                details = VisitUtils.getVisitGroups(asrhLibrary.visitDetailsRepository().getVisits(lastVisit.getVisitId()));
+            }
+        }
 
         final Runnable runnable = () -> {
             try {
                 evaluateClientStatus(memberObject, details);
-                evaluateHealthEducation(memberObject, details);
-                evaluateSexualReproductiveHealthEducation(memberObject, details);
-                evaluateMentalHealthAndSubstanceAbuse(memberObject, details);
-                evaluateFacilitationMethod(memberObject, details);
-
             } catch (BaseAsrhVisitAction.ValidationException e) {
                 Timber.e(e);
             }
@@ -119,7 +119,29 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
     }
 
     protected void evaluateClientStatus(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new ClientStatusActionHelper(mContext, memberObject);
+        AsrhVisitActionHelper actionHelper = new ClientStatusActionHelper(mContext, memberObject) {
+            @Override
+            public void processClientStatus(String clientStatus) {
+                if (clientStatus.equals("active")) {
+                    try {
+                        evaluateHealthEducation(memberObject, details);
+                        evaluateSexualReproductiveHealthEducation(memberObject, details);
+                        evaluateMentalHealthAndSubstanceAbuse(memberObject, details);
+                        evaluateFacilitationMethod(memberObject, details);
+                    } catch (Exception e) {
+                        Timber.e(e);
+                    }
+                } else {
+                    actionList.remove(mContext.getString(R.string.asrh_health_education));
+                    actionList.remove(mContext.getString(R.string.asrh_sexual_reproductive_health_education));
+                    actionList.remove(mContext.getString(R.string.asrh_mental_health_and_substance_abuse));
+                    actionList.remove(mContext.getString(R.string.asrh_facilitation_methods));
+                }
+
+                appExecutors.mainThread().execute(() -> callBack.preloadActions(actionList));
+
+            }
+        };
         String actionName = mContext.getString(R.string.asrh_client_status);
         BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_CLIENT_STATUS).build();
         actionList.put(actionName, action);
@@ -214,12 +236,12 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
             processExternalVisits(visit, externalVisits, memberID);
         }
 
-        if (asrh.isSubmitOnSave()) {
+        if (asrhLibrary.isSubmitOnSave()) {
             List<Visit> visits = new ArrayList<>(1);
             visits.add(visit);
-            VisitUtils.processVisits(visits, asrh.visitRepository(), asrh.visitDetailsRepository());
+            VisitUtils.processVisits(visits, asrhLibrary.visitRepository(), asrhLibrary.visitDetailsRepository());
 
-            Context context = asrh.getInstance().context().applicationContext();
+            Context context = asrhLibrary.getInstance().context().applicationContext();
 
         }
     }
@@ -248,7 +270,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
 
     protected @Nullable Visit saveVisit(boolean editMode, String memberID, String encounterType, final Map<String, String> jsonString, String parentEventType) throws Exception {
 
-        AllSharedPreferences allSharedPreferences = asrh.getInstance().context().allSharedPreferences();
+        AllSharedPreferences allSharedPreferences = asrhLibrary.getInstance().context().allSharedPreferences();
 
         String derivedEncounterType = StringUtils.isBlank(parentEventType) ? encounterType : "";
         Event baseEvent = JsonFormUtils.processVisitJsonForm(allSharedPreferences, memberID, derivedEncounterType, jsonString, getTableName());
@@ -291,17 +313,17 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
 
     @VisibleForTesting
     public VisitRepository visitRepository() {
-        return Asrh.getInstance().visitRepository();
+        return AsrhLibrary.getInstance().visitRepository();
     }
 
     protected void deleteOldVisit(String visitID) {
         visitRepository().deleteVisit(visitID);
-        Asrh.getInstance().visitDetailsRepository().deleteVisitDetails(visitID);
+        AsrhLibrary.getInstance().visitDetailsRepository().deleteVisitDetails(visitID);
 
         List<Visit> childVisits = visitRepository().getChildEvents(visitID);
         for (Visit v : childVisits) {
             visitRepository().deleteVisit(v.getVisitId());
-            Asrh.getInstance().visitDetailsRepository().deleteVisitDetails(v.getVisitId());
+            AsrhLibrary.getInstance().visitDetailsRepository().deleteVisitDetails(v.getVisitId());
         }
     }
 
@@ -314,7 +336,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                 for (VisitDetail d : entry.getValue()) {
                     d.setPreProcessedJson(payloadDetails);
                     d.setPreProcessedType(payloadType);
-                    Asrh.getInstance().visitDetailsRepository().addVisitDetails(d);
+                    AsrhLibrary.getInstance().visitDetailsRepository().addVisitDetails(d);
                 }
             }
         }
@@ -348,7 +370,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
     }
 
     protected String getTableName() {
-        return Constants.TABLES.ARSH_REGISTER;
+        return Constants.TABLES.ASRH_FOLLOW_UP;
     }
 
 }
