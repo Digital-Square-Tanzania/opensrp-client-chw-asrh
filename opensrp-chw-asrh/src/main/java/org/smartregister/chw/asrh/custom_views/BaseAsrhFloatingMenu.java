@@ -21,17 +21,17 @@ public class BaseAsrhFloatingMenu extends LinearLayout implements View.OnClickLi
 
     protected void initUi() {
         inflate(getContext(), R.layout.view_asrh_floating_menu, this);
-        FloatingActionButton fab = findViewById(R.id.sbc_fab);
+        FloatingActionButton fab = findViewById(R.id.asrh_fab);
         if (fab != null)
             fab.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.sbc_fab) {
+        if (view.getId() == R.id.asrh_fab) {
             Activity activity = (Activity) getContext();
             BaseAsrhCallDialogFragment.launchDialog(activity, MEMBER_OBJECT);
-        }  else if (view.getId() == R.id.sbc_refer_to_facility_layout) {
+        }  else if (view.getId() == R.id.asrh_refer_to_facility_layout) {
             Activity activity = (Activity) getContext();
             BaseAsrhCallDialogFragment.launchDialog(activity, MEMBER_OBJECT);
         }
