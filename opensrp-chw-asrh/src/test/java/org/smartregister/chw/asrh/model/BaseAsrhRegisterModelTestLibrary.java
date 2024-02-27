@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-public class BaseAsrhRegisterModelTest {
+public class BaseAsrhRegisterModelTestLibrary {
 
     @Mock
     private BaseAsrhRegisterModel baseTestRegisterModel;

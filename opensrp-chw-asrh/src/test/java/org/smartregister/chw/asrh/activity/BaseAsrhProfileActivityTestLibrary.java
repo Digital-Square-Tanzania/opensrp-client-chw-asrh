@@ -16,7 +16,7 @@ import org.smartregister.chw.asrh.R;
 
 import static org.mockito.Mockito.validateMockitoUsage;
 
-public class BaseAsrhProfileActivityTest {
+public class BaseAsrhProfileActivityTestLibrary {
     @Mock
     public BaseAsrhProfileActivity baseTestProfileActivity;
 

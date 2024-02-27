@@ -11,7 +11,7 @@ import org.smartregister.commonregistry.CommonPersonObjectClient;
 
 import static org.mockito.Mockito.times;
 
-public class BaseAsrhRegisterFragmentTest {
+public class BaseAsrhRegisterFragmentTestLibrary {
     @Mock
     public BaseAsrhRegisterFragment baseTestRegisterFragment;
 

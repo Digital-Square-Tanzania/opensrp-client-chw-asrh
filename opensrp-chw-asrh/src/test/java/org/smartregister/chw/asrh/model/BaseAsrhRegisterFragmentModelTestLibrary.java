@@ -13,7 +13,7 @@ import org.smartregister.configurableviews.model.ViewConfiguration;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BaseAsrhRegisterFragmentModelTest {
+public class BaseAsrhRegisterFragmentModelTestLibrary {
 
     @Mock
     private BaseAsrhRegisterFragmentModel baseTestRegisterFragmentModel;

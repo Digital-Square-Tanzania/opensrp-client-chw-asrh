@@ -23,7 +23,7 @@ import java.util.Map;
 
 import static org.mockito.Mockito.validateMockitoUsage;
 
-public class AsrhRegisterProviderTest {
+public class AsrhLibraryRegisterProviderTest {
     @Mock
     public CommonPersonObjectClient commonPersonObjectClient;
     @Mock

@@ -13,7 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.smartregister.repository.Repository;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AsrhDaoTest extends AsrhDao {
+public class AsrhLibraryDaoTest extends AsrhDao {
 
     @Mock
     private Repository repository;

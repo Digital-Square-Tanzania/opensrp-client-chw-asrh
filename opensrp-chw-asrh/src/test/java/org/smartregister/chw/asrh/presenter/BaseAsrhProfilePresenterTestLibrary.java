@@ -9,7 +9,7 @@ import org.smartregister.chw.asrh.domain.MemberObject;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-public class BaseAsrhProfilePresenterTest {
+public class BaseAsrhProfilePresenterTestLibrary {
 
     @Mock
     private AsrhProfileContract.View view = Mockito.mock(AsrhProfileContract.View.class);

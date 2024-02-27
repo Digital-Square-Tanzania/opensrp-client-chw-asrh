@@ -17,7 +17,7 @@ import org.powermock.reflect.Whitebox;
 import org.smartregister.chw.asrh.domain.MemberObject;
 
 @PrepareForTest(BaseAsrhCallDialogFragment.class)
-public class BaseAsrhCallDialogFragmentTest {
+public class BaseAsrhCallDialogFragmentTestLibrary {
     @Spy
     public BaseAsrhCallDialogFragment baseTestCallDialogFragment;
 

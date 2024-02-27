@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.reflect.Whitebox;
 
-public class BaseAsrhRegisterActivityTest {
+public class BaseAsrhRegisterActivityTestLibrary {
     @Mock
     public Intent data;
     @Mock

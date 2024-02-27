@@ -14,7 +14,7 @@ import org.smartregister.configurableviews.model.View;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class BaseAsrhRegisterFragmentPresenterTest {
+public class BaseAsrhRegisterFragmentPresenterTestLibrary {
     @Mock
     protected AsrhRegisterFragmentContract.View view;
 

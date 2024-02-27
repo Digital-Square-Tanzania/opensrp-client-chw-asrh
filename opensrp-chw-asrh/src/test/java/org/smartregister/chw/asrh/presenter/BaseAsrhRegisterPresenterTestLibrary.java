@@ -12,7 +12,7 @@ import org.powermock.reflect.Whitebox;
 import org.smartregister.chw.asrh.contract.AsrhRegisterContract;
 
 @PrepareForTest(BaseAsrhRegisterPresenter.class)
-public class BaseAsrhRegisterPresenterTest {
+public class BaseAsrhRegisterPresenterTestLibrary {
     @Mock
     protected BaseAsrhRegisterPresenter baseAsrhRegisterPresenter;
 
