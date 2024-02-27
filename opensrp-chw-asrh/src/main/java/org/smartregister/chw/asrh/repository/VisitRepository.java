@@ -375,7 +375,7 @@ public class VisitRepository extends BaseRepository {
         try {
             ContentValues values = new ContentValues();
             values.put(DBConstants.KEY.VISIT_NOT_DONE, date);
-            getWritableDatabase().update(Constants.TABLES.ARSH_REGISTER, values, DBConstants.KEY.BASE_ENTITY_ID + " = ?", new String[]{baseID});
+            getWritableDatabase().update(Constants.TABLES.ASRH_REGISTER, values, DBConstants.KEY.BASE_ENTITY_ID + " = ?", new String[]{baseID});
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -389,7 +389,7 @@ public class VisitRepository extends BaseRepository {
                 return null;
             }
 
-            cursor = database.query(Constants.TABLES.ARSH_REGISTER, new String[]{dateColumn}, BASE_ENTITY_ID + " = ? " + COLLATE_NOCASE, new String[]{baseEntityID}, null, null, null);
+            cursor = database.query(Constants.TABLES.ASRH_REGISTER, new String[]{dateColumn}, BASE_ENTITY_ID + " = ? " + COLLATE_NOCASE, new String[]{baseEntityID}, null, null, null);
 
             if (cursor != null && cursor.getCount() > 0 && cursor.moveToFirst()) {
                 String date = cursor.getString(cursor.getColumnIndex(dateColumn));
