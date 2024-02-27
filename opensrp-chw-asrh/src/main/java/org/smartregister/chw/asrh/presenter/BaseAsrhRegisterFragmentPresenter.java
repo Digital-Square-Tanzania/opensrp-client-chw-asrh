@@ -97,7 +97,7 @@ public class BaseAsrhRegisterFragmentPresenter implements AsrhRegisterFragmentCo
 
     @Override
     public String getMainTable() {
-        return Constants.TABLES.ARSH_REGISTER;
+        return Constants.TABLES.ASRH_REGISTER;
     }
 
     @Override
