@@ -65,7 +65,7 @@ public class BaseAsrhRegisterFragment extends BaseRegisterFragment implements As
         CustomFontTextView titleView = view.findViewById(R.id.txt_title_label);
         if (titleView != null) {
             titleView.setVisibility(android.view.View.VISIBLE);
-            titleView.setText(getString(R.string.sbc));
+            titleView.setText(getString(R.string.asrh));
             titleView.setFontVariant(FontVariant.REGULAR);
         }
     }

@@ -1,6 +1,6 @@
 package org.smartregister.chw.asrh.model;
 
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.contract.AsrhRegisterFragmentContract;
 import org.smartregister.chw.asrh.util.ConfigHelper;
 import org.smartregister.configurableviews.ConfigurableViewsLibrary;
@@ -15,7 +15,7 @@ public class BaseAsrhRegisterFragmentModel implements AsrhRegisterFragmentContra
 
     @Override
     public RegisterConfiguration defaultRegisterConfiguration() {
-        return ConfigHelper.defaultRegisterConfiguration(Asrh.getInstance().context().applicationContext());
+        return ConfigHelper.defaultRegisterConfiguration(AsrhLibrary.getInstance().context().applicationContext());
     }
 
     @Override

@@ -22,7 +22,7 @@ import com.vijay.jsonwizard.domain.Form;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.smartregister.AllConstants;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.R;
 import org.smartregister.chw.asrh.adapter.BaseAsrhVisitAdapter;
 import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
@@ -119,6 +119,7 @@ public class BaseAsrhVisitActivity extends SecuredActivity implements BaseAsrhVi
 
     @Override
     public void initializeActions(LinkedHashMap<String, BaseAsrhVisitAction> map) {
+        actionList.clear();
         //Necessary evil to rearrange the actions according to a specific arrangement
         if (map.containsKey(getString(R.string.asrh_client_status))) {
             actionList.put(getString(R.string.asrh_client_status), map.get(getString(R.string.asrh_client_status)));
@@ -214,11 +215,11 @@ public class BaseAsrhVisitActivity extends SecuredActivity implements BaseAsrhVi
                 startFormActivity(jsonObject);
             } catch (Exception e) {
                 Timber.e(e);
-                String locationId = Asrh.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
+                String locationId = AsrhLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
                 presenter().startForm(asrhVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
             }
         } else {
-            String locationId = Asrh.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
+            String locationId = AsrhLibrary.getInstance().context().allSharedPreferences().getPreference(AllConstants.CURRENT_LOCATION_ID);
             presenter().startForm(asrhVisitAction.getFormName(), memberObject.getBaseEntityId(), locationId);
         }
     }

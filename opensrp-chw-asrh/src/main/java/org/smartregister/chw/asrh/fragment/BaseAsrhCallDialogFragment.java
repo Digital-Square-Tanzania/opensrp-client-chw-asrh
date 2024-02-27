@@ -72,7 +72,7 @@ public class BaseAsrhCallDialogFragment extends DialogFragment implements BaseAs
         } else if (MEMBER_OBJECT.getBaseEntityId().equals(MEMBER_OBJECT.getPrimaryCareGiver())) {
             callTitle.setText(String.format("%s %s", message, getResources().getString(R.string.call_primary_caregiver)));
         } else {
-            callTitle.setText(String.format("%s %s", message, getResources().getString(R.string.call_sbc_client)));
+            callTitle.setText(String.format("%s %s", message, getResources().getString(R.string.call_asrh_client)));
         }
     }
 

@@ -2,7 +2,7 @@ package org.smartregister.chw.asrh.interactor;
 
 import androidx.annotation.VisibleForTesting;
 
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.util.Constants;
 import org.smartregister.chw.asrh.util.AsrhUtil;
 import org.smartregister.chw.asrh.contract.AsrhProfileContract;
@@ -46,7 +46,7 @@ public class BaseAsrhProfileInteractor implements AsrhProfileContract.Interactor
 
     private Visit getVisit(String eventType, MemberObject memberObject) {
         try {
-            return Asrh.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
+            return AsrhLibrary.getInstance().visitRepository().getLatestVisit(memberObject.getBaseEntityId(), eventType);
         } catch (Exception e) {
             return null;
         }

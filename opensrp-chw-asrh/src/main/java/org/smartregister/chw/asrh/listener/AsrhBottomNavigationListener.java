@@ -25,8 +25,6 @@ public class AsrhBottomNavigationListener extends BottomNavigationListener {
 
         if (item.getItemId() == R.id.action_family) {
             baseRegisterActivity.switchToBaseFragment();
-        } else if (item.getItemId() == R.id.action_asrh_mobilization) {
-            baseRegisterActivity.switchToFragment(1);
         }
 
         return true;
