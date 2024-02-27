@@ -10,8 +10,8 @@ import org.smartregister.sync.helper.ECSyncHelper;
 
 import id.zelory.compressor.Compressor;
 
-public class Asrh {
-    private static Asrh instance;
+public class AsrhLibrary {
+    private static AsrhLibrary instance;
     private VisitRepository visitRepository;
     private VisitDetailsRepository visitDetailsRepository;
     private boolean submitOnSave = false;
@@ -28,11 +28,11 @@ public class Asrh {
 
     public static void init(Context context, Repository repository, int applicationVersion, int databaseVersion) {
         if (instance == null) {
-            instance = new Asrh(context, repository, applicationVersion, databaseVersion);
+            instance = new AsrhLibrary(context, repository, applicationVersion, databaseVersion);
         }
     }
 
-    public static Asrh getInstance() {
+    public static AsrhLibrary getInstance() {
         if (instance == null) {
             throw new IllegalStateException(" Instance does not exist!!! Call "
                     + CoreLibrary.class.getName()
@@ -42,7 +42,7 @@ public class Asrh {
         return instance;
     }
 
-    private Asrh(Context contextArg, Repository repositoryArg, int applicationVersion, int databaseVersion) {
+    private AsrhLibrary(Context contextArg, Repository repositoryArg, int applicationVersion, int databaseVersion) {
         this.context = contextArg;
         this.repository = repositoryArg;
         this.applicationVersion = applicationVersion;

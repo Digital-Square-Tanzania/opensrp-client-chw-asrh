@@ -47,12 +47,12 @@ public class BaseAsrhRegisterFragmentPresenterTest {
 
     @Test
     public void getDefaultSortQuery() {
-        Assert.assertEquals(Constants.TABLES.ARSH_REGISTER + "." + DBConstants.KEY.LAST_INTERACTED_WITH + " DESC ", baseAsrhRegisterFragmentPresenter.getDefaultSortQuery());
+        Assert.assertEquals(Constants.TABLES.ASRH_REGISTER + "." + DBConstants.KEY.LAST_INTERACTED_WITH + " DESC ", baseAsrhRegisterFragmentPresenter.getDefaultSortQuery());
     }
 
     @Test
     public void getMainTable() {
-        Assert.assertEquals(Constants.TABLES.ARSH_REGISTER, baseAsrhRegisterFragmentPresenter.getMainTable());
+        Assert.assertEquals(Constants.TABLES.ASRH_REGISTER, baseAsrhRegisterFragmentPresenter.getMainTable());
     }
 
     @Test
