@@ -7,7 +7,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.smartregister.AllConstants;
 import org.smartregister.chw.asrh_sample.application.SampleApplication;
 import org.smartregister.chw.asrh_sample.BuildConfig;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.configurableviews.repository.ConfigurableViewsRepository;
 import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.Repository;
@@ -44,8 +44,8 @@ public class SampleRepository extends Repository {
         SettingsRepository.onUpgrade(database);
 
 
-        Asrh.getInstance().visitRepository().createTable(database);
-        Asrh.getInstance().visitDetailsRepository().createTable(database);
+        AsrhLibrary.getInstance().visitRepository().createTable(database);
+        AsrhLibrary.getInstance().visitDetailsRepository().createTable(database);
 
         onUpgrade(database, 1, BuildConfig.DATABASE_VERSION);
     }

@@ -7,7 +7,7 @@ import org.smartregister.CoreLibrary;
 import org.smartregister.chw.asrh_sample.job.SampleJobCreator;
 import org.smartregister.chw.asrh_sample.utils.SampleConstants;
 import org.smartregister.chw.asrh_sample.BuildConfig;
-import org.smartregister.chw.asrh.Asrh;
+import org.smartregister.chw.asrh.AsrhLibrary;
 import org.smartregister.chw.asrh.util.DBConstants;
 import org.smartregister.chw.asrh_sample.repository.SampleRepository;
 import org.smartregister.commonregistry.CommonFtsObject;
@@ -43,7 +43,7 @@ public class SampleApplication extends DrishtiApplication {
         //Initialize Modules
         CoreLibrary.init(context);
         ConfigurableViewsLibrary.init(context);
-        Asrh.init(context, getRepository(), BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION);
+        AsrhLibrary.init(context, getRepository(), BuildConfig.VERSION_CODE, BuildConfig.DATABASE_VERSION);
 
         SyncStatusBroadcastReceiver.init(this);
 
