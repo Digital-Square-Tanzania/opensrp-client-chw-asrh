@@ -35,6 +35,8 @@ public class MemberObject implements Serializable {
 
     private String ctcNumber;
 
+    private String clientStatus;
+
     public MemberObject() {
     }
 
@@ -227,5 +229,13 @@ public class MemberObject implements Serializable {
 
     public void setCtcNumber(String ctcNumber) {
         this.ctcNumber = ctcNumber;
+    }
+
+    public String getClientStatus() {
+        return clientStatus;
+    }
+
+    public void setClientStatus(String clientStatus) {
+        this.clientStatus = clientStatus;
     }
 }

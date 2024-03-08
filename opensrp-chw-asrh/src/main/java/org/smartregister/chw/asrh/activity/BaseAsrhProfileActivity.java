@@ -20,15 +20,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import org.apache.commons.lang3.StringUtils;
-import org.smartregister.chw.asrh.custom_views.BaseAsrhFloatingMenu;
-import org.smartregister.chw.asrh.dao.AsrhDao;
-import org.smartregister.chw.asrh.interactor.BaseAsrhProfileInteractor;
-import org.smartregister.chw.asrh.presenter.BaseAsrhProfilePresenter;
-import org.smartregister.chw.asrh.util.Constants;
-import org.smartregister.chw.asrh.util.AsrhUtil;
 import org.smartregister.chw.asrh.R;
 import org.smartregister.chw.asrh.contract.AsrhProfileContract;
+import org.smartregister.chw.asrh.custom_views.BaseAsrhFloatingMenu;
+import org.smartregister.chw.asrh.dao.AsrhDao;
 import org.smartregister.chw.asrh.domain.MemberObject;
+import org.smartregister.chw.asrh.interactor.BaseAsrhProfileInteractor;
+import org.smartregister.chw.asrh.presenter.BaseAsrhProfilePresenter;
+import org.smartregister.chw.asrh.util.AsrhUtil;
+import org.smartregister.chw.asrh.util.Constants;
 import org.smartregister.helper.ImageRenderHelper;
 import org.smartregister.view.activity.BaseProfileActivity;
 
@@ -54,14 +54,13 @@ public class BaseAsrhProfileActivity extends BaseProfileActivity implements Asrh
     protected RelativeLayout visitStatus;
     protected ImageView imageViewCross;
     protected TextView textViewUndo;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
     protected TextView textViewVisitDone;
     protected RelativeLayout visitDone;
     protected LinearLayout recordVisits;
     protected TextView textViewVisitDoneEdit;
-
-    private ProgressBar progressBar;
     protected BaseAsrhFloatingMenu baseAsrhFloatingMenu;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+    private ProgressBar progressBar;
 
     public static void startProfileActivity(Activity activity, String baseEntityId) {
         Intent intent = new Intent(activity, BaseAsrhProfileActivity.class);
@@ -227,6 +226,15 @@ public class BaseAsrhProfileActivity extends BaseProfileActivity implements Asrh
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE_GET_JSON && resultCode == RESULT_OK) {
             profilePresenter.saveForm(data.getStringExtra(Constants.JSON_FORM_EXTRA.JSON));
+        }
+
+        try {
+            memberObject = AsrhDao.getMember(memberObject.getBaseEntityId());
+            if (memberObject != null && memberObject.getClientStatus() != null && memberObject.getClientStatus().equalsIgnoreCase("opt_out")) {
+                new AsrhUtil.CloseAsrhMemberFromRegister(memberObject.getBaseEntityId()).execute();
+            }
+        } catch (Exception e) {
+            Timber.e(e);
         }
     }
 }

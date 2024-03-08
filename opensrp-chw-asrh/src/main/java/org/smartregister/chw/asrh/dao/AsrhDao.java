@@ -58,6 +58,7 @@ public class AsrhDao extends AbstractDao {
             memberObject.setFamilyHeadPhoneNumber(getCursorValue(cursor, "family_head_phone_number", ""));
             memberObject.setHivStatus(getCursorValue(cursor, "hiv_status", ""));
             memberObject.setCtcNumber(getCursorValue(cursor, "ctc_number", ""));
+            memberObject.setClientStatus(getCursorValue(cursor, "client_status", ""));
 
             String familyHeadName = getCursorValue(cursor, "family_head_first_name", "") + " " + getCursorValue(cursor, "family_head_middle_name", "");
 
