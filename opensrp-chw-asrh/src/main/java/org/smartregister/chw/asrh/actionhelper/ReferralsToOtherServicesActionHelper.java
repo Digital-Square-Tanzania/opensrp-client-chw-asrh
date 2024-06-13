@@ -23,16 +23,6 @@ public class ReferralsToOtherServicesActionHelper extends AsrhVisitActionHelper 
         this.memberObject = memberObject;
     }
 
-    /**
-     * set preprocessed status to be inert
-     *
-     * @return null
-     */
-    @Override
-    public String getPreProcessed() {
-        return null;
-    }
-
     @Override
     public void onPayloadReceived(String jsonPayload) {
         try {
