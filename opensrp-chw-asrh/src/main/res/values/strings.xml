@@ -59,6 +59,7 @@
     <string name="asrh_sexual_reproductive_health_education">Sexual Reproductive health Education</string>
     <string name="asrh_mental_health_education">Mental Health Education</string>
     <string name="asrh_referrals_to_other_services">Referrals to Other Services</string>
+    <string name="asrh_next_appointment_date">Next Appointment Date</string>
     <string name="asrh_facilitation_methods">Facilitation Methods</string>
 
     <string name="asrh_registration">AYSRH Registration</string>

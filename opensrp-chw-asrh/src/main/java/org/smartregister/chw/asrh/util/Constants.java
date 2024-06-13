@@ -38,6 +38,8 @@ public interface Constants {
 
         String ASRH_REFERRALS_TO_OTHER_SERVICE = "asrh_referrals_to_other_services";
 
+        String ASRH_NEXT_APPOINTMENT_DATE = "asrh_set_appointment_date";
+
         String ASRH_FACILITATION_METHOD = "asrh_facilitation_methods";
 
     }

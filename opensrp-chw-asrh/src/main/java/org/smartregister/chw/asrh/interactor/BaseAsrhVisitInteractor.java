@@ -17,6 +17,7 @@ import org.smartregister.chw.asrh.actionhelper.FacilitationMethodsActionHelper;
 import org.smartregister.chw.asrh.actionhelper.HealthEducationActionHelper;
 import org.smartregister.chw.asrh.actionhelper.MentalHealthEducationActionHelper;
 import org.smartregister.chw.asrh.actionhelper.ReferralsToOtherServicesActionHelper;
+import org.smartregister.chw.asrh.actionhelper.SetNextAppointmentDateActionHelper;
 import org.smartregister.chw.asrh.actionhelper.SexualReproductiveHealthEducationActionHelper;
 import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
 import org.smartregister.chw.asrh.dao.AsrhDao;
@@ -130,6 +131,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                         evaluateMentalHealthEducation(memberObject, details);
                         evaluateFacilitationMethod(memberObject, details);
                         evaluateReferralsToOtherServices(memberObject, details);
+                        evaluateNextAppointmentDate(memberObject, details);
                     } catch (Exception e) {
                         Timber.e(e);
                     }
@@ -139,6 +141,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                     actionList.remove(mContext.getString(R.string.asrh_mental_health_education));
                     actionList.remove(mContext.getString(R.string.asrh_facilitation_methods));
                     actionList.remove(mContext.getString(R.string.asrh_referrals_to_other_services));
+                    actionList.remove(mContext.getString(R.string.asrh_next_appointment_date));
                 }
 
                 appExecutors.mainThread().execute(() -> callBack.preloadActions(actionList));
@@ -175,6 +178,13 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
         AsrhVisitActionHelper actionHelper = new ReferralsToOtherServicesActionHelper(mContext, memberObject);
         String actionName = mContext.getString(R.string.asrh_referrals_to_other_services);
         BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_REFERRALS_TO_OTHER_SERVICE).build();
+        actionList.put(actionName, action);
+    }
+
+    protected void evaluateNextAppointmentDate(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new SetNextAppointmentDateActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_next_appointment_date);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_NEXT_APPOINTMENT_DATE).build();
         actionList.put(actionName, action);
     }
 
