@@ -138,6 +138,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                     actionList.remove(mContext.getString(R.string.asrh_sexual_reproductive_health_education));
                     actionList.remove(mContext.getString(R.string.asrh_mental_health_and_substance_abuse));
                     actionList.remove(mContext.getString(R.string.asrh_facilitation_methods));
+                    actionList.remove(mContext.getString(R.string.asrh_referrals_to_other_services));
                 }
 
                 appExecutors.mainThread().execute(() -> callBack.preloadActions(actionList));
