@@ -11,7 +11,7 @@ import org.smartregister.chw.asrh.model.BaseAsrhVisitAction;
 import timber.log.Timber;
 
 /**
- * ASRH Activity Action Helper
+ * AYSRH Activity Action Helper
  */
 public class FacilitationMethodsActionHelper extends AsrhVisitActionHelper {
     protected Context context;

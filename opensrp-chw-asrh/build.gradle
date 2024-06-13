@@ -16,7 +16,7 @@ plugins {
     id 'maven-publish'
 }
 
-description = 'OpenSRP CHW ASRH library'
+description = 'OpenSRP CHW AYSRH library'
 
 jacoco {
     toolVersion = "0.8.10"

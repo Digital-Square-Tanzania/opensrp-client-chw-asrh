@@ -17,7 +17,7 @@ import java.util.Map;
 import timber.log.Timber;
 
 /**
- * ASRH Activity Action Helper
+ * AYSRH Activity Action Helper
  */
 public class HealthEducationActionHelper extends AsrhVisitActionHelper {
     protected Context context;

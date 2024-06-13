@@ -16,6 +16,7 @@ import org.smartregister.chw.asrh.actionhelper.ClientStatusActionHelper;
 import org.smartregister.chw.asrh.actionhelper.FacilitationMethodsActionHelper;
 import org.smartregister.chw.asrh.actionhelper.HealthEducationActionHelper;
 import org.smartregister.chw.asrh.actionhelper.MentalHealthAndSubstanceAbuseActionHelper;
+import org.smartregister.chw.asrh.actionhelper.ReferralsToOtherServicesActionHelper;
 import org.smartregister.chw.asrh.actionhelper.SexualReproductiveHealthEducationActionHelper;
 import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
 import org.smartregister.chw.asrh.dao.AsrhDao;
@@ -128,6 +129,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                         evaluateSexualReproductiveHealthEducation(memberObject, details);
                         evaluateMentalHealthAndSubstanceAbuse(memberObject, details);
                         evaluateFacilitationMethod(memberObject, details);
+                        evaluateReferralsToOtherServices(memberObject, details);
                     } catch (Exception e) {
                         Timber.e(e);
                     }
@@ -165,6 +167,13 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
         AsrhVisitActionHelper actionHelper = new MentalHealthAndSubstanceAbuseActionHelper(mContext, memberObject);
         String actionName = mContext.getString(R.string.asrh_mental_health_and_substance_abuse);
         BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_MENTAL_HEALTH_AND_SUBSTANCE_ABUSE).build();
+        actionList.put(actionName, action);
+    }
+
+    protected void evaluateReferralsToOtherServices(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new ReferralsToOtherServicesActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_referrals_to_other_services);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_REFERRALS_TO_OTHER_SERVICE).build();
         actionList.put(actionName, action);
     }
 

@@ -11,7 +11,7 @@ import java.util.Map;
 import timber.log.Timber;
 
 /**
- * Designed to set default methods for the ASRH Action Helper
+ * Designed to set default methods for the AYSRH Action Helper
  * This object must remain inert to the Home Visit action. Its designed primarily for extension by simple visit actions
  */
 public abstract class AsrhVisitActionHelper implements BaseAsrhVisitAction.AsrhVisitActionHelper {
