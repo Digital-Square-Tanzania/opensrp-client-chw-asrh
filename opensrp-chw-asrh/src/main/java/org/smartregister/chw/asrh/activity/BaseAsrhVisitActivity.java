@@ -133,8 +133,8 @@ public class BaseAsrhVisitActivity extends SecuredActivity implements BaseAsrhVi
             actionList.put(getString(R.string.asrh_sexual_reproductive_health_education), map.get(getString(R.string.asrh_sexual_reproductive_health_education)));
         }
 
-        if (map.containsKey(getString(R.string.asrh_mental_health_and_substance_abuse))) {
-            actionList.put(getString(R.string.asrh_mental_health_and_substance_abuse), map.get(getString(R.string.asrh_mental_health_and_substance_abuse)));
+        if (map.containsKey(getString(R.string.asrh_mental_health_education))) {
+            actionList.put(getString(R.string.asrh_mental_health_education), map.get(getString(R.string.asrh_mental_health_education)));
         }
 
         if (map.containsKey(getString(R.string.asrh_facilitation_methods))) {

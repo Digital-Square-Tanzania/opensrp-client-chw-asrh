@@ -34,7 +34,7 @@ public interface Constants {
 
         String ASRH_SEXUAL_REPRODUCTIVE_HEALTH_EDUCATION = "asrh_sexual_reproductive_health_education";
 
-        String ASRH_MENTAL_HEALTH_AND_SUBSTANCE_ABUSE = "asrh_mental_health_and_substance_abuse";
+        String ASRH_MENTAL_HEALTH_EDUCATION = "asrh_mental_health_education";
 
         String ASRH_REFERRALS_TO_OTHER_SERVICE = "asrh_referrals_to_other_services";
 

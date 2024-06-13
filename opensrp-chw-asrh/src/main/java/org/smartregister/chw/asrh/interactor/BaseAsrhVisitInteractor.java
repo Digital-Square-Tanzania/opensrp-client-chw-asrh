@@ -15,7 +15,7 @@ import org.smartregister.chw.asrh.actionhelper.AsrhVisitActionHelper;
 import org.smartregister.chw.asrh.actionhelper.ClientStatusActionHelper;
 import org.smartregister.chw.asrh.actionhelper.FacilitationMethodsActionHelper;
 import org.smartregister.chw.asrh.actionhelper.HealthEducationActionHelper;
-import org.smartregister.chw.asrh.actionhelper.MentalHealthAndSubstanceAbuseActionHelper;
+import org.smartregister.chw.asrh.actionhelper.MentalHealthEducationActionHelper;
 import org.smartregister.chw.asrh.actionhelper.ReferralsToOtherServicesActionHelper;
 import org.smartregister.chw.asrh.actionhelper.SexualReproductiveHealthEducationActionHelper;
 import org.smartregister.chw.asrh.contract.BaseAsrhVisitContract;
@@ -127,7 +127,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                     try {
                         evaluateHealthEducation(memberObject, details);
                         evaluateSexualReproductiveHealthEducation(memberObject, details);
-                        evaluateMentalHealthAndSubstanceAbuse(memberObject, details);
+                        evaluateMentalHealthEducation(memberObject, details);
                         evaluateFacilitationMethod(memberObject, details);
                         evaluateReferralsToOtherServices(memberObject, details);
                     } catch (Exception e) {
@@ -136,7 +136,7 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                 } else {
                     actionList.remove(mContext.getString(R.string.asrh_health_education));
                     actionList.remove(mContext.getString(R.string.asrh_sexual_reproductive_health_education));
-                    actionList.remove(mContext.getString(R.string.asrh_mental_health_and_substance_abuse));
+                    actionList.remove(mContext.getString(R.string.asrh_mental_health_education));
                     actionList.remove(mContext.getString(R.string.asrh_facilitation_methods));
                     actionList.remove(mContext.getString(R.string.asrh_referrals_to_other_services));
                 }
@@ -164,10 +164,10 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
         actionList.put(actionName, action);
     }
 
-    protected void evaluateMentalHealthAndSubstanceAbuse(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new MentalHealthAndSubstanceAbuseActionHelper(mContext, memberObject);
-        String actionName = mContext.getString(R.string.asrh_mental_health_and_substance_abuse);
-        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_MENTAL_HEALTH_AND_SUBSTANCE_ABUSE).build();
+    protected void evaluateMentalHealthEducation(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
+        AsrhVisitActionHelper actionHelper = new MentalHealthEducationActionHelper(mContext, memberObject);
+        String actionName = mContext.getString(R.string.asrh_mental_health_education);
+        BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_MENTAL_HEALTH_EDUCATION).build();
         actionList.put(actionName, action);
     }
 
