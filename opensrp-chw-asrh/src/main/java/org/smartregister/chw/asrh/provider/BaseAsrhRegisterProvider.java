@@ -33,7 +33,7 @@ import java.util.Set;
 
 import timber.log.Timber;
 
-public class AsrhRegisterProvider implements RecyclerViewProvider<AsrhRegisterProvider.RegisterViewHolder> {
+public class BaseAsrhRegisterProvider implements RecyclerViewProvider<BaseAsrhRegisterProvider.RegisterViewHolder> {
 
     private final LayoutInflater inflater;
 
@@ -42,7 +42,7 @@ public class AsrhRegisterProvider implements RecyclerViewProvider<AsrhRegisterPr
     private Context context;
     private Set<org.smartregister.configurableviews.model.View> visibleColumns;
 
-    public AsrhRegisterProvider(Context context, View.OnClickListener paginationClickListener, View.OnClickListener onClickListener, Set visibleColumns) {
+    public BaseAsrhRegisterProvider(Context context, View.OnClickListener paginationClickListener, View.OnClickListener onClickListener, Set visibleColumns) {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.paginationClickListener = paginationClickListener;

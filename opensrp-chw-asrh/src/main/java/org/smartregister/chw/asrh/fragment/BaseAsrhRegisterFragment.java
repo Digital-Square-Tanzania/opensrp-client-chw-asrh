@@ -8,7 +8,7 @@ import org.smartregister.chw.asrh.R;
 import org.smartregister.chw.asrh.activity.BaseAsrhProfileActivity;
 import org.smartregister.chw.asrh.contract.AsrhRegisterFragmentContract;
 import org.smartregister.chw.asrh.model.BaseAsrhRegisterFragmentModel;
-import org.smartregister.chw.asrh.provider.AsrhRegisterProvider;
+import org.smartregister.chw.asrh.provider.BaseAsrhRegisterProvider;
 import org.smartregister.commonregistry.CommonPersonObjectClient;
 import org.smartregister.configurableviews.model.View;
 import org.smartregister.cursoradapter.RecyclerViewPaginatedAdapter;
@@ -25,8 +25,8 @@ public class BaseAsrhRegisterFragment extends BaseRegisterFragment implements As
 
     @Override
     public void initializeAdapter(Set<View> visibleColumns) {
-        AsrhRegisterProvider asrhRegisterProvider = new AsrhRegisterProvider(getActivity(), paginationViewHandler, registerActionHandler, visibleColumns);
-        clientAdapter = new RecyclerViewPaginatedAdapter(null, asrhRegisterProvider, context().commonrepository(this.tablename));
+        BaseAsrhRegisterProvider baseAsrhRegisterProvider = new BaseAsrhRegisterProvider(getActivity(), paginationViewHandler, registerActionHandler, visibleColumns);
+        clientAdapter = new RecyclerViewPaginatedAdapter(null, baseAsrhRegisterProvider, context().commonrepository(this.tablename));
         clientAdapter.setCurrentlimit(20);
         clientsView.setAdapter(clientAdapter);
     }

@@ -29,9 +29,9 @@ public class AsrhLibraryRegisterProviderTest {
     @Mock
     public View.OnClickListener listener;
     @Mock
-    public AsrhRegisterProvider.RegisterViewHolder viewHolder;
+    public BaseAsrhRegisterProvider.RegisterViewHolder viewHolder;
     @Mock
-    private AsrhRegisterProvider testRegisterProvider;
+    private BaseAsrhRegisterProvider testRegisterProvider;
 
     @Before
     public void setUp() {
@@ -77,7 +77,7 @@ public class AsrhLibraryRegisterProviderTest {
     public void updateMemberGender() throws Exception {
         Activity activity = Mockito.mock(Activity.class);
         Resources resources = Mockito.mock(Resources.class);
-        AsrhRegisterProvider provider = new AsrhRegisterProvider(activity, listener, listener, null);
+        BaseAsrhRegisterProvider provider = new BaseAsrhRegisterProvider(activity, listener, listener, null);
         Map<String, String> map = new HashMap<>();
         map.put(DBConstants.KEY.GENDER, "Male");
 
