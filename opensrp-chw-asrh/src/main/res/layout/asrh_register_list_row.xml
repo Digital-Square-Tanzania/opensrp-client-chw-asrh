@@ -83,7 +83,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/due_button_wrapper"
         android:layout_width="@dimen/register_list_item_width"
         android:layout_height="@dimen/register_list_item_height"

@@ -10,8 +10,8 @@
     <string name="job_aids">Vitendea kazi</string>
     <string name="saving_dialog_title">Kuhifadhi</string>
     <string name="asrh_followup_visit">Tembeleo la ufuatiliaji</string>
-    <string name="record_asrh">Rekodi ufuatiliaji wa AYSRH</string>
-    <string name="return_to_previous_asrh_clients_page">Rudi kwenye wateja wote wa malaria</string>
+    <string name="record_asrh">Rekodi tembeleo la afya ya uzazi kwa vijana</string>
+    <string name="return_to_previous_asrh_clients_page">Rudi kwenye wateja wote wa afya ya uzazi kwa vijana</string>
     <string name="last_visit_40_days_ago">Tembeleo la mwisho %1$s uliyopita</string>
     <string name="view_asrh_followp_history">Angalia historia ya huduma</string>
     <string name="asrh_followup_history">Historia ya huduma</string>
@@ -46,6 +46,15 @@
     <string name="edit">HARIRI</string>
     <string name="male">Me</string>
     <string name="female">Ke</string>
-    <string name="issue_referral">Toa Rufaa</string>
+    <string name="issue_referral">Rufaa kwenda kituo cha kutolea huduma za afya</string>
+    <string name="asrh_visit">Tembeleo la Afya ya uzazi kwa vijana</string>
+    <string name="asrh_client_status">Hali ya mteja</string>
+    <string name="asrh_health_education">Elimu ya afya na ushauri</string>
+    <string name="asrh_sexual_reproductive_health_education">Elimu ya afya ya uzazi</string>
+    <string name="asrh_mental_health_education">Elimu ya Afya ya Akili</string>
+    <string name="asrh_referrals_to_other_services">Rufaa kwenda huduma nyingine</string>
+    <string name="asrh_next_appointment_date">Tarehe ye tembeleo lijalo</string>
+    <string name="asrh_facilitation_methods">Njia za uwezeshaji</string>
+    <string name="asrh_registration">Usajili wa mteja kwenye huduma za afya ya uzazi kwa vijana</string>
 
 </resources>

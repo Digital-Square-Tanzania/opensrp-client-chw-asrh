@@ -37,6 +37,8 @@ public class MemberObject implements Serializable {
 
     private String clientStatus;
 
+    private String nextAppointmentDate;
+
     public MemberObject() {
     }
 
@@ -237,5 +239,13 @@ public class MemberObject implements Serializable {
 
     public void setClientStatus(String clientStatus) {
         this.clientStatus = clientStatus;
+    }
+
+    public String getNextAppointmentDate() {
+        return nextAppointmentDate;
+    }
+
+    public void setNextAppointmentDate(String nextAppointmentDate) {
+        this.nextAppointmentDate = nextAppointmentDate;
     }
 }
