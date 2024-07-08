@@ -46,7 +46,7 @@
     <string name="edit">HARIRI</string>
     <string name="male">Me</string>
     <string name="female">Ke</string>
-    <string name="issue_referral">Rufaa kwenda kituo cha kutolea huduma za afya</string>
+    <string name="issue_facility_referral">Rufaa kwenda kituo cha kutolea huduma za afya</string>
     <string name="asrh_visit">Tembeleo la Afya ya uzazi kwa vijana</string>
     <string name="asrh_client_status">Hali ya mteja</string>
     <string name="asrh_health_education">Elimu ya afya na ushauri</string>

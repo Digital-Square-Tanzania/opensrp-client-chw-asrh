@@ -63,6 +63,6 @@
     <string name="asrh_facilitation_methods">Facilitation Methods</string>
 
     <string name="asrh_registration">AYSRH Registration</string>
-    <string name="issue_referral">Issue Referral</string>
+    <string name="issue_facility_referral">Issue Referral</string>
 
 </resources>
