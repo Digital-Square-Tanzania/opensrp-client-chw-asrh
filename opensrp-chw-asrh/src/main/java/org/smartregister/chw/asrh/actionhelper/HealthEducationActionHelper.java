@@ -19,7 +19,7 @@ import timber.log.Timber;
 /**
  * AYSRH Activity Action Helper
  */
-public class HealthEducationActionHelper extends AsrhVisitActionHelper {
+public abstract class HealthEducationActionHelper extends AsrhVisitActionHelper {
     protected Context context;
     protected MemberObject memberObject;
     protected String healthEducation;
@@ -63,10 +63,13 @@ public class HealthEducationActionHelper extends AsrhVisitActionHelper {
         try {
             JSONObject jsonObject = new JSONObject(jsonPayload);
             healthEducation = JsonFormUtils.getValue(jsonObject, "was_health_education_provided");
+            processHealthEducationProvided(JsonFormUtils.getValue(jsonObject, "provided_health_education"));
         } catch (Exception e) {
             Timber.e(e);
         }
     }
+
+    public abstract void processHealthEducationProvided(String providedHealthEducation);
 
     @Override
     public String evaluateSubTitle() {

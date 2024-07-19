@@ -127,8 +127,6 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
                 if (clientStatus.equals("active")) {
                     try {
                         evaluateHealthEducation(memberObject, details);
-                        evaluateSexualReproductiveHealthEducation(memberObject, details);
-                        evaluateMentalHealthEducation(memberObject, details);
                         evaluateFacilitationMethod(memberObject, details);
                         evaluateReferralsToOtherServices(memberObject, details);
                         evaluateNextAppointmentDate(memberObject, details);
@@ -154,7 +152,32 @@ public class BaseAsrhVisitInteractor implements BaseAsrhVisitContract.Interactor
     }
 
     protected void evaluateHealthEducation(MemberObject memberObject, Map<String, List<VisitDetail>> details) throws BaseAsrhVisitAction.ValidationException {
-        AsrhVisitActionHelper actionHelper = new HealthEducationActionHelper(mContext, memberObject);
+        AsrhVisitActionHelper actionHelper = new HealthEducationActionHelper(mContext, memberObject) {
+            @Override
+            public void processHealthEducationProvided(String providedHealthEducation) {
+                if (StringUtils.isNotBlank(providedHealthEducation) && providedHealthEducation.contains("sexual_reproductive_health_education")) {
+                    try {
+                        evaluateSexualReproductiveHealthEducation(memberObject, details);
+                    } catch (BaseAsrhVisitAction.ValidationException e) {
+                        Timber.e(e);
+                    }
+                } else {
+                    actionList.remove(mContext.getString(R.string.asrh_sexual_reproductive_health_education));
+                }
+
+                if (StringUtils.isNotBlank(providedHealthEducation) && providedHealthEducation.contains("mental_health_and_substance_abuse")) {
+                    try {
+                        evaluateMentalHealthEducation(memberObject, details);
+                    } catch (BaseAsrhVisitAction.ValidationException e) {
+                        Timber.e(e);
+                    }
+                } else {
+                    actionList.remove(mContext.getString(R.string.asrh_mental_health_education));
+                }
+
+                appExecutors.mainThread().execute(() -> callBack.preloadActions(actionList));
+            }
+        };
         String actionName = mContext.getString(R.string.asrh_health_education);
         BaseAsrhVisitAction action = getBuilder(actionName).withOptional(false).withDetails(details).withHelper(actionHelper).withFormName(Constants.FORMS.ASRH_HEALTH_EDUCATION).build();
         actionList.put(actionName, action);
