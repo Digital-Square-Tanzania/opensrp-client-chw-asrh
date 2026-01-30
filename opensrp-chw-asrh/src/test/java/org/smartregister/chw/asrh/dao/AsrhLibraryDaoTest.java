@@ -1,6 +1,6 @@
 package org.smartregister.chw.asrh.dao;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import net.zetetic.database.sqlcipher.SQLiteDatabase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,21 +9,24 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.smartregister.repository.Repository;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(SQLiteDatabase.class)
 public class AsrhLibraryDaoTest extends AsrhDao {
 
     @Mock
     private Repository repository;
 
-    @Mock
     private SQLiteDatabase database;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        database = PowerMockito.mock(SQLiteDatabase.class);
         setRepository(repository);
     }
 
@@ -35,4 +38,3 @@ public class AsrhLibraryDaoTest extends AsrhDao {
         Assert.assertFalse(registered);
     }
 }
-
