@@ -1,8 +1,9 @@
 package org.smartregister.chw.asrh_sample.repository;
 
 import android.content.Context;
+import android.text.TextUtils;
 
-import net.sqlcipher.database.SQLiteDatabase;
+import net.zetetic.database.sqlcipher.SQLiteDatabase;
 
 import org.smartregister.AllConstants;
 import org.smartregister.chw.asrh_sample.application.SampleApplication;
@@ -13,6 +14,8 @@ import org.smartregister.repository.EventClientRepository;
 import org.smartregister.repository.Repository;
 import org.smartregister.repository.SettingsRepository;
 import org.smartregister.repository.UniqueIdRepository;
+
+import java.lang.reflect.Method;
 
 import timber.log.Timber;
 
@@ -38,7 +41,7 @@ public class SampleRepository extends Repository {
         EventClientRepository.createTable(database, EventClientRepository.Table.client, EventClientRepository.client_column.values());
         EventClientRepository.createTable(database, EventClientRepository.Table.event, EventClientRepository.event_column.values());
 
-        ConfigurableViewsRepository.createTable(database);
+        createConfigurableViewsTable(database);
 
         UniqueIdRepository.createTable(database);
         SettingsRepository.onUpgrade(database);
@@ -72,22 +75,31 @@ public class SampleRepository extends Repository {
 
     @Override
     public SQLiteDatabase getReadableDatabase() {
-        return getReadableDatabase(password);
+        return openReadableDatabase();
     }
 
     @Override
     public SQLiteDatabase getWritableDatabase() {
-        return getWritableDatabase(password);
+        return openWritableDatabase();
     }
 
-    @Override
     public synchronized SQLiteDatabase getReadableDatabase(String password) {
+        if (!TextUtils.isEmpty(password)) {
+            this.password = password;
+        }
+        return openReadableDatabase();
+    }
+
+    private synchronized SQLiteDatabase openReadableDatabase() {
+        if (TextUtils.isEmpty(password)) {
+            Timber.e("Database password is empty.");
+        }
         try {
             if (readableDatabase == null || !readableDatabase.isOpen()) {
                 if (readableDatabase != null) {
                     readableDatabase.close();
                 }
-                readableDatabase = super.getReadableDatabase(password);
+                readableDatabase = super.getReadableDatabase();
             }
             return readableDatabase;
         } catch (Exception e) {
@@ -97,13 +109,22 @@ public class SampleRepository extends Repository {
 
     }
 
-    @Override
     public synchronized SQLiteDatabase getWritableDatabase(String password) {
+        if (!TextUtils.isEmpty(password)) {
+            this.password = password;
+        }
+        return openWritableDatabase();
+    }
+
+    private synchronized SQLiteDatabase openWritableDatabase() {
+        if (TextUtils.isEmpty(password)) {
+            Timber.e("Database password is empty.");
+        }
         if (writableDatabase == null || !writableDatabase.isOpen()) {
             if (writableDatabase != null) {
                 writableDatabase.close();
             }
-            writableDatabase = super.getWritableDatabase(password);
+            writableDatabase = super.getWritableDatabase();
         }
         return writableDatabase;
     }
@@ -118,5 +139,16 @@ public class SampleRepository extends Repository {
             writableDatabase.close();
         }
         super.close();
+    }
+
+    private void createConfigurableViewsTable(SQLiteDatabase database) {
+        try {
+            Method createTable = ConfigurableViewsRepository.class.getMethod("createTable", database.getClass());
+            createTable.invoke(null, database);
+        } catch (NoSuchMethodException e) {
+            Timber.w("ConfigurableViewsRepository.createTable signature mismatch; skipping table creation.");
+        } catch (Exception e) {
+            Timber.e(e);
+        }
     }
 }
