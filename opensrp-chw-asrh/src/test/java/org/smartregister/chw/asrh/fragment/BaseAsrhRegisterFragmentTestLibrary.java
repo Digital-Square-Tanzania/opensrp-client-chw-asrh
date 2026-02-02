@@ -28,7 +28,8 @@ public class BaseAsrhRegisterFragmentTestLibrary {
         Whitebox.invokeMethod(baseTestRegisterFragment, "openProfile", client);
         PowerMockito.mockStatic(BaseAsrhProfileActivity.class);
         BaseAsrhProfileActivity.startProfileActivity(null, null);
-        PowerMockito.verifyStatic(times(1));
+        PowerMockito.verifyStatic(BaseAsrhProfileActivity.class, times(1));
+        BaseAsrhProfileActivity.startProfileActivity(null, null);
 
     }
 }

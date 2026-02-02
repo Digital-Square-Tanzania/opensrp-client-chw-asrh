@@ -7,15 +7,20 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.reflect.Whitebox;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import org.smartregister.chw.asrh.contract.AsrhProfileContract;
 import org.smartregister.chw.asrh.R;
 
 import static org.mockito.Mockito.validateMockitoUsage;
 
+@RunWith(RobolectricTestRunner.class)
+@Config(sdk = 28)
 public class BaseAsrhProfileActivityTestLibrary {
     @Mock
     public BaseAsrhProfileActivity baseTestProfileActivity;

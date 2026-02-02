@@ -8,7 +8,7 @@ buildscript {
 
     dependencies {
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.11.0"
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:4.2.2'
     }
 }
 
@@ -33,11 +33,11 @@ subprojects {
 
     group = 'org.smartregister'
 
-    ext.androidToolsBuildGradle     = '3.1.4'
-    ext.androidBuildToolsVersion    = '28.0.3'
-    ext.androidMinSdkVersion        = 18
-    ext.androidCompileSdkVersion    = 28
-    ext.androidTargetSdkVersion     = 28
+    ext.androidToolsBuildGradle     = '4.2.2'
+    ext.androidBuildToolsVersion    = '30.0.3'
+    ext.androidMinSdkVersion        = 21
+    ext.androidCompileSdkVersion    = 33
+    ext.androidTargetSdkVersion     = 33
 
     ext.androidAnnotationsVersion = '3.0.1'
     ext.androidAnnotationsAPIVersion = '3.0.1'
@@ -52,6 +52,12 @@ subprojects {
         maven { url "https://cloudant.github.io/cloudant-sync-eap/repository" }
         maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
         mavenLocal()
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'net.zetetic:sqlcipher-android:4.5.4'
+        resolutionStrategy.force 'org.smartregister:opensrp-client-utils:0.0.6-SNAPSHOT'
+        resolutionStrategy.force 'org.apache.commons:commons-lang3:3.12.0'
     }
 
     // Improve build server performance by allowing disabling of pre-dexing
