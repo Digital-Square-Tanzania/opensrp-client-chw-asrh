@@ -12,4 +12,6 @@ Fixed
   family and member status columns do not cause an ambiguous-column SQL error.
 - Preserve active enrollment selection, member details and older members needed
   by the age-based closure job, with focused SQLite regression coverage.
+- Include the release coverage runtime, declared artifact types/classifiers and
+  dependency/configuration exclusions in the published package metadata.
 
